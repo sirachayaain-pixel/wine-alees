@@ -212,6 +212,17 @@
     .dialog__success h3 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; }
     .dialog__success p { color: var(--c-muted); font-size: 0.9375rem; max-width: 36ch; line-height: 1.65; }
 
+    /* ─── Page-wide "pour" ground ─────────────────────────────────────
+       A single fixed full-bleed layer behind all content, fading in a soft
+       oxblood wash as the visitor scrolls — light-mode throughout, never as
+       dark/saturated as the Hero's own pour. Capped low enough that ink,
+       muted text, and the how-to connector line stay comfortably on the
+       light palette the whole way down; no text-color switching needed. */
+    .page-pour {
+      position: fixed; inset: 0; z-index: -1; opacity: 0; pointer-events: none;
+      background: var(--c-primary); will-change: opacity;
+    }
+
     /* ─── Hero ────────────────────────────────────────────────────── */
     .hero {
       min-height: 100svh; background: var(--c-bg);
@@ -272,7 +283,7 @@
     }
 
     /* ─── Catalog ─────────────────────────────────────────────────── */
-    .catalog { background: var(--c-bg); }
+    .catalog { background: transparent; }
     .catalog__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--sp-6); margin-bottom: var(--sp-8); }
     .catalog__head .heading { margin-bottom: 0; }
     .catalog__filters { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
@@ -314,7 +325,7 @@
     .card__add:hover { background: var(--c-primary); color: var(--c-on-primary); }
 
     /* ─── Story ───────────────────────────────────────────────────── */
-    .story { background: var(--c-surface); }
+    .story { background: transparent; }
     .story__inner { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-16); align-items: center; }
     .story__panel { aspect-ratio: 4/5; background: var(--c-primary); border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; }
     .story__panel svg { width: 40%; opacity: 0.8; filter: drop-shadow(0 20px 36px oklch(0.10 0.05 23 / 0.5)); }
@@ -328,8 +339,9 @@
     .story__cta:hover { opacity: 0.7; }
 
     /* ─── How to Order ────────────────────────────────────────────── */
-    .how-to { background: var(--c-bg); }
+    .how-to { background: transparent; }
     .how-to__intro { text-align: center; max-width: 48ch; margin-inline: auto; margin-bottom: var(--sp-16); }
+    .how-to__intro-sub { font-size: 1rem; color: var(--c-muted); transition: color var(--t); }
     .how-to__steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-8); position: relative; }
     .how-to__steps::before { content: ''; position: absolute; top: 28px; left: calc(16.67% + 28px); right: calc(16.67% + 28px); height: 1px; background: color-mix(in oklch, var(--c-primary) 35%, transparent); }
     .step { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--sp-4); }
@@ -397,6 +409,9 @@
   </style>
 </head>
 <body>
+
+  <!-- ─── Page-wide pour ground (fixed, behind everything) ───────────── -->
+  <div class="page-pour" aria-hidden="true"></div>
 
   <!-- ─── Nav ─────────────────────────────────────────────────────── -->
   <nav class="nav" id="nav" aria-label="เมนูหลัก">
@@ -599,7 +614,7 @@
       <div class="how-to__intro">
         <p class="kicker">วิธีสั่งซื้อ</p>
         <h2 class="heading" id="how-h">ง่ายกว่าที่คิด เพียง 3 ขั้นตอน</h2>
-        <p style="font-size:1rem;color:var(--c-muted)">จากการดู catalog ไปจนถึงได้รับไวน์ที่คุณต้องการ</p>
+        <p class="how-to__intro-sub">จากการดู catalog ไปจนถึงได้รับไวน์ที่คุณต้องการ</p>
       </div>
       <div class="how-to__steps">
         <div class="step reveal">
@@ -981,6 +996,19 @@
         opacity: 1, ease: 'none',
         scrollTrigger: {
           trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true
+        }
+      });
+
+      /* ── Page-wide pour: a soft oxblood wash builds across the whole
+         homepage scroll, finishing right as .line-band (already solid
+         oxblood) begins. Capped low — stays light-mode throughout, well
+         short of the Hero's own saturated pour. ── */
+      gsap.to('.page-pour', {
+        opacity: 0.18, ease: 'none',
+        scrollTrigger: {
+          trigger: document.body, start: 'top top',
+          endTrigger: '.line-band', end: 'top top',
+          scrub: true
         }
       });
 
