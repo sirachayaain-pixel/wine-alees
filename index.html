@@ -22,7 +22,7 @@
       --c-bg:           oklch(1.000 0.000 0);
       --c-surface:      oklch(0.972 0.005 23);
       --c-ink:          oklch(0.140 0.008 23);
-      --c-muted:        oklch(0.420 0.008 23);
+      --c-muted:        oklch(0.420 0.016 23);
       --c-accent:       oklch(0.680 0.115 78);
       --c-on-primary:   oklch(0.940 0.008 60);
       --c-footer:       oklch(0.115 0.004 23);
@@ -89,7 +89,7 @@
       transition: background var(--t); white-space: nowrap;
     }
     .nav__line-btn:hover { background: #04a847; }
-    .nav--scrolled { background: var(--c-bg); box-shadow: 0 1px 0 oklch(0.14 0.008 23 / 0.08); }
+    .nav--scrolled { background: var(--c-bg); box-shadow: 0 1px 0 oklch(0.400 0.079 23.4 / 0.14); }
     .nav--scrolled .nav__logo,
     .nav--scrolled .nav__cart-btn { color: var(--c-ink); }
     .nav--scrolled .nav__links a { color: var(--c-ink); }
@@ -110,7 +110,7 @@
     .cart-drawer.open { transform: translateX(0); }
     .cart-drawer__head {
       display: flex; align-items: center; justify-content: space-between;
-      padding: var(--sp-5) var(--sp-6); border-bottom: 1px solid oklch(0.90 0.004 23); flex-shrink: 0;
+      padding: var(--sp-5) var(--sp-6); border-bottom: 1px solid oklch(0.90 0.014 23); flex-shrink: 0;
     }
     .cart-drawer__title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; }
     .cart-close-btn {
@@ -127,7 +127,7 @@
     .cart-empty p { font-size: 0.9375rem; }
     .cart-item {
       display: grid; grid-template-columns: auto 1fr auto;
-      gap: var(--sp-4); padding-block: var(--sp-4); border-bottom: 1px solid oklch(0.92 0.003 23);
+      gap: var(--sp-4); padding-block: var(--sp-4); border-bottom: 1px solid oklch(0.92 0.012 23);
     }
     .cart-item__thumb {
       width: 50px; height: 66px; background: var(--c-primary); border-radius: var(--r-sm);
@@ -138,13 +138,13 @@
     .cart-item__price { color: var(--c-accent); font-weight: 600; font-size: 0.875rem; margin-top: var(--sp-1); }
     .cart-item__qty { display: flex; flex-direction: column; align-items: center; gap: var(--sp-2); flex-shrink: 0; }
     .qty-btn {
-      width: 28px; height: 28px; border: 1px solid oklch(0.85 0.005 23); background: none;
+      width: 28px; height: 28px; border: 1px solid oklch(0.85 0.016 23); background: none;
       border-radius: var(--r-sm); font-size: 1rem; color: var(--c-ink);
       display: flex; align-items: center; justify-content: center; transition: background var(--t);
     }
     .qty-btn:hover { background: var(--c-surface); }
     .qty-num { font-weight: 600; font-size: 0.9375rem; min-width: 20px; text-align: center; }
-    .cart-drawer__foot { padding: var(--sp-5) var(--sp-6); border-top: 1px solid oklch(0.90 0.004 23); flex-shrink: 0; }
+    .cart-drawer__foot { padding: var(--sp-5) var(--sp-6); border-top: 1px solid oklch(0.90 0.014 23); flex-shrink: 0; }
     .cart-total { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--sp-4); }
     .cart-total__label { font-size: 0.875rem; color: var(--c-muted); }
     .cart-total__amount { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--c-accent); }
@@ -179,14 +179,14 @@
     }
     .dialog__summary-title { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.10em; text-transform: uppercase; color: var(--c-muted); margin-bottom: var(--sp-3); }
     .dialog__summary-item { display: flex; justify-content: space-between; font-size: 0.875rem; padding-block: 2px; }
-    .dialog__summary-total { display: flex; justify-content: space-between; font-weight: 600; border-top: 1px solid oklch(0.88 0.004 23); margin-top: var(--sp-2); padding-top: var(--sp-2); }
+    .dialog__summary-total { display: flex; justify-content: space-between; font-weight: 600; border-top: 1px solid oklch(0.88 0.014 23); margin-top: var(--sp-2); padding-top: var(--sp-2); }
     .dialog__summary-total-amount { color: var(--c-accent); }
     .form-group { margin-bottom: var(--sp-4); }
     .form-label { display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: var(--sp-2); }
     .form-label .req { color: oklch(0.55 0.12 25); }
     .form-input {
       width: 100%; padding: var(--sp-3) var(--sp-4);
-      border: 1.5px solid oklch(0.85 0.005 23); border-radius: var(--r-sm);
+      border: 1.5px solid oklch(0.85 0.016 23); border-radius: var(--r-sm);
       font-family: var(--font-body); font-size: 0.9375rem; color: var(--c-ink); background: var(--c-bg);
       transition: border-color var(--t);
     }
@@ -277,7 +277,7 @@
     .catalog__head .heading { margin-bottom: 0; }
     .catalog__filters { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
     .filter-btn {
-      padding: var(--sp-2) var(--sp-4); border: 1.5px solid oklch(0.85 0.005 23);
+      padding: var(--sp-2) var(--sp-4); border: 1.5px solid oklch(0.85 0.016 23);
       background: none; border-radius: var(--r-sm); font-family: var(--font-body);
       font-size: 0.8125rem; font-weight: 500; color: var(--c-muted); transition: var(--t);
     }
@@ -286,8 +286,8 @@
     .catalog__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(256px, 1fr)); gap: var(--sp-6); }
 
     /* Card */
-    .card { background: var(--c-surface); border-radius: var(--r-md); overflow: hidden; display: flex; flex-direction: column; transition: box-shadow var(--t), transform var(--t); }
-    .card:hover { box-shadow: 0 16px 48px oklch(0.14 0.008 23 / 0.11); transform: translateY(-3px); }
+    .card { background: var(--c-surface); border-radius: var(--r-md); overflow: hidden; display: flex; flex-direction: column; border: 1px solid transparent; transition: box-shadow var(--t), transform var(--t), border-color var(--t); }
+    .card:hover { box-shadow: 0 16px 48px oklch(0.35 0.050 23.4 / 0.16); border-color: oklch(0.400 0.079 23.4 / 0.25); transform: translateY(-3px); }
     .card__img { aspect-ratio: 3/4; background: var(--c-primary); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
     .card__img--white  { background: var(--c-primary-hi); }
     .card__img--rose   { background: var(--c-primary-rose); }
@@ -303,7 +303,7 @@
     .card__name { font-family: var(--font-display); font-size: 1rem; font-weight: 600; line-height: 1.3; color: var(--c-ink); }
     .card__meta { font-size: 0.8125rem; color: var(--c-muted); }
     .card__notes { font-size: 0.8125rem; color: var(--c-muted); line-height: 1.55; margin-top: var(--sp-2); flex: 1; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-    .card__foot { display: flex; align-items: center; justify-content: space-between; padding: var(--sp-3) var(--sp-5) var(--sp-4); border-top: 1px solid oklch(0.90 0.004 23); }
+    .card__foot { display: flex; align-items: center; justify-content: space-between; padding: var(--sp-3) var(--sp-5) var(--sp-4); border-top: 1px solid oklch(0.90 0.014 23); }
     .card__price { font-weight: 700; font-size: 1.125rem; color: var(--c-accent); }
     .card__price-unit { font-size: 0.75rem; font-weight: 400; margin-left: 2px; color: var(--c-muted); }
     .card__add {
@@ -331,7 +331,7 @@
     .how-to { background: var(--c-bg); }
     .how-to__intro { text-align: center; max-width: 48ch; margin-inline: auto; margin-bottom: var(--sp-16); }
     .how-to__steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-8); position: relative; }
-    .how-to__steps::before { content: ''; position: absolute; top: 28px; left: calc(16.67% + 28px); right: calc(16.67% + 28px); height: 1px; background: oklch(0.86 0.006 23); }
+    .how-to__steps::before { content: ''; position: absolute; top: 28px; left: calc(16.67% + 28px); right: calc(16.67% + 28px); height: 1px; background: color-mix(in oklch, var(--c-primary) 35%, transparent); }
     .step { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--sp-4); }
     .step__num { width: 56px; height: 56px; border-radius: 50%; background: var(--c-primary); color: var(--c-on-primary); font-family: var(--font-display); font-size: 1.375rem; font-weight: 600; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
     .step__title { font-family: var(--font-display); font-size: 1.0625rem; font-weight: 600; color: var(--c-ink); }
