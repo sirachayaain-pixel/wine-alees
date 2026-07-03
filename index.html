@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>อาลีส์ — Alees Wine Selection</title>
+  <meta name="description" content="Alees Wine — ไวน์คุณภาพคัดสรรจากอิตาลี ดูรายละเอียดและราคาก่อนสั่งผ่าน Line@">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── Design Tokens ──────────────────────────────────────────── */
+    :root {
+      /* Brand color sampled from official Alees catalog: #6C3533 */
+      --c-primary:      oklch(0.400 0.079 23.4);
+      --c-primary-mid:  oklch(0.480 0.065 23.4);
+      --c-primary-hi:   oklch(0.550 0.055 23.4);
+      --c-primary-rose: oklch(0.520 0.060 350);
+      --c-bg:           oklch(1.000 0.000 0);
+      --c-surface:      oklch(0.972 0.005 23);
+      --c-ink:          oklch(0.140 0.008 23);
+      --c-muted:        oklch(0.420 0.008 23);
+      --c-accent:       oklch(0.680 0.115 78);
+      --c-on-primary:   oklch(0.940 0.008 60);
+      --c-footer:       oklch(0.115 0.004 23);
+      --c-line:         #06C755;
+
+      --font-display: 'Spectral', Georgia, serif;
+      --font-body:    'Jost', system-ui, sans-serif;
+
+      --sp-1: 0.25rem; --sp-2: 0.5rem;  --sp-3: 0.75rem; --sp-4: 1rem;
+      --sp-5: 1.25rem; --sp-6: 1.5rem;  --sp-8: 2rem;    --sp-10: 2.5rem;
+      --sp-12: 3rem;   --sp-16: 4rem;   --sp-20: 5rem;   --sp-24: 6rem;
+
+      --r-sm: 2px; --r-md: 4px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --t: 220ms var(--ease);
+    }
+
+    /* ─── Reset ───────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body); font-size: 1rem; line-height: 1.65;
+      color: var(--c-ink); background: var(--c-bg);
+      -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+    .container { width: min(1180px, 100% - var(--sp-8)); margin-inline: auto; }
+
+    /* ─── Navigation ──────────────────────────────────────────────── */
+    .nav {
+      position: fixed; inset-block-start: 0; inset-inline: 0; z-index: 200;
+      padding-block: var(--sp-4);
+      transition: background var(--t), box-shadow var(--t);
+    }
+    .nav__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-6); }
+    .nav__logo { display: flex; align-items: center; gap: var(--sp-3); color: var(--c-on-primary); transition: color var(--t); }
+    .nav__logo-mark { width: 34px; height: 40px; flex-shrink: 0; }
+    .nav__logo-word { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; letter-spacing: 0.14em; line-height: 1; }
+    .nav__links { display: flex; gap: var(--sp-6); list-style: none; flex: 1; justify-content: center; }
+    .nav__links a { font-size: 0.875rem; font-weight: 500; letter-spacing: 0.03em; color: var(--c-on-primary); opacity: 0.75; transition: opacity var(--t); }
+    .nav__links a:hover { opacity: 1; }
+    .nav__actions { display: flex; align-items: center; gap: var(--sp-3); }
+    .nav__cart-btn {
+      position: relative; background: none; border: none; padding: var(--sp-2);
+      color: var(--c-on-primary); display: flex; align-items: center; gap: var(--sp-1);
+      font-size: 0.8125rem; font-weight: 500; transition: color var(--t);
+    }
+    .nav__cart-badge {
+      position: absolute; top: -2px; right: -4px;
+      background: var(--c-accent); color: var(--c-ink); font-size: 0.625rem; font-weight: 700;
+      min-width: 18px; height: 18px; border-radius: 9px;
+      display: none; align-items: center; justify-content: center; padding-inline: 3px;
+    }
+    .nav__cart-badge.visible { display: flex; }
+    .nav__line-btn {
+      font-size: 0.8125rem; font-weight: 500; padding: var(--sp-2) var(--sp-4);
+      background: var(--c-line); color: #fff; border: none; border-radius: var(--r-sm);
+      transition: background var(--t); white-space: nowrap;
+    }
+    .nav__line-btn:hover { background: #04a847; }
+    .nav--scrolled { background: var(--c-bg); box-shadow: 0 1px 0 oklch(0.14 0.008 23 / 0.08); }
+    .nav--scrolled .nav__logo,
+    .nav--scrolled .nav__cart-btn { color: var(--c-ink); }
+    .nav--scrolled .nav__links a { color: var(--c-ink); }
+
+    /* ─── Cart Drawer ──────────────────────────────────────────────── */
+    .cart-overlay {
+      position: fixed; inset: 0; background: oklch(0.10 0.005 23 / 0.5);
+      z-index: 300; opacity: 0; pointer-events: none; transition: opacity var(--t);
+    }
+    .cart-overlay.open { opacity: 1; pointer-events: auto; }
+    .cart-drawer {
+      position: fixed; inset-block: 0; inset-inline-end: 0; z-index: 301;
+      width: min(440px, 100vw); background: var(--c-bg);
+      display: flex; flex-direction: column;
+      transform: translateX(100%); transition: transform 300ms var(--ease);
+      box-shadow: -4px 0 32px oklch(0.14 0.008 23 / 0.12);
+    }
+    .cart-drawer.open { transform: translateX(0); }
+    .cart-drawer__head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--sp-5) var(--sp-6); border-bottom: 1px solid oklch(0.90 0.004 23); flex-shrink: 0;
+    }
+    .cart-drawer__title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; }
+    .cart-close-btn {
+      background: none; border: none; padding: var(--sp-2); color: var(--c-muted);
+      display: flex; align-items: center; transition: color var(--t);
+    }
+    .cart-close-btn:hover { color: var(--c-ink); }
+    .cart-drawer__body { flex: 1; overflow-y: auto; padding: var(--sp-4) var(--sp-6); }
+    .cart-empty {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      height: 240px; gap: var(--sp-4); color: var(--c-muted); text-align: center;
+    }
+    .cart-empty svg { opacity: 0.3; }
+    .cart-empty p { font-size: 0.9375rem; }
+    .cart-item {
+      display: grid; grid-template-columns: auto 1fr auto;
+      gap: var(--sp-4); padding-block: var(--sp-4); border-bottom: 1px solid oklch(0.92 0.003 23);
+    }
+    .cart-item__thumb {
+      width: 50px; height: 66px; background: var(--c-primary); border-radius: var(--r-sm);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .cart-item__brand { font-size: 0.6875rem; color: var(--c-muted); margin-bottom: 2px; }
+    .cart-item__name { font-family: var(--font-display); font-size: 0.9375rem; font-weight: 600; line-height: 1.3; }
+    .cart-item__price { color: var(--c-accent); font-weight: 600; font-size: 0.875rem; margin-top: var(--sp-1); }
+    .cart-item__qty { display: flex; flex-direction: column; align-items: center; gap: var(--sp-2); flex-shrink: 0; }
+    .qty-btn {
+      width: 28px; height: 28px; border: 1px solid oklch(0.85 0.005 23); background: none;
+      border-radius: var(--r-sm); font-size: 1rem; color: var(--c-ink);
+      display: flex; align-items: center; justify-content: center; transition: background var(--t);
+    }
+    .qty-btn:hover { background: var(--c-surface); }
+    .qty-num { font-weight: 600; font-size: 0.9375rem; min-width: 20px; text-align: center; }
+    .cart-drawer__foot { padding: var(--sp-5) var(--sp-6); border-top: 1px solid oklch(0.90 0.004 23); flex-shrink: 0; }
+    .cart-total { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--sp-4); }
+    .cart-total__label { font-size: 0.875rem; color: var(--c-muted); }
+    .cart-total__amount { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; color: var(--c-accent); }
+    .cart-order-btn {
+      width: 100%; padding: var(--sp-4); background: var(--c-primary); color: var(--c-on-primary);
+      border: none; border-radius: var(--r-sm); font-size: 1rem; font-weight: 500; transition: background var(--t);
+    }
+    .cart-order-btn:hover:not(:disabled) { background: oklch(0.360 0.075 23.4); }
+    .cart-order-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* ─── Order Dialog ─────────────────────────────────────────────── */
+    .order-dialog {
+      position: fixed; inset: 0; z-index: 400; margin: auto;
+      width: min(540px, 100vw - var(--sp-8)); max-height: calc(100dvh - var(--sp-16));
+      padding: 0; border: none; border-radius: var(--r-md); background: var(--c-bg);
+      box-shadow: 0 24px 64px oklch(0.10 0.008 23 / 0.25); overflow: hidden;
+    }
+    .order-dialog::backdrop { background: oklch(0.10 0.005 23 / 0.6); }
+    .dialog__head {
+      background: var(--c-primary); padding: var(--sp-5) var(--sp-6);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .dialog__title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; color: var(--c-on-primary); }
+    .dialog__close {
+      background: none; border: none; color: var(--c-on-primary); opacity: 0.7;
+      font-size: 1.5rem; line-height: 1; padding: var(--sp-1); transition: opacity var(--t);
+    }
+    .dialog__close:hover { opacity: 1; }
+    .dialog__body { padding: var(--sp-6); overflow-y: auto; max-height: calc(100dvh - 200px); }
+    .dialog__summary {
+      background: var(--c-surface); border-radius: var(--r-sm); padding: var(--sp-4); margin-bottom: var(--sp-6);
+    }
+    .dialog__summary-title { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.10em; text-transform: uppercase; color: var(--c-muted); margin-bottom: var(--sp-3); }
+    .dialog__summary-item { display: flex; justify-content: space-between; font-size: 0.875rem; padding-block: 2px; }
+    .dialog__summary-total { display: flex; justify-content: space-between; font-weight: 600; border-top: 1px solid oklch(0.88 0.004 23); margin-top: var(--sp-2); padding-top: var(--sp-2); }
+    .dialog__summary-total-amount { color: var(--c-accent); }
+    .form-group { margin-bottom: var(--sp-4); }
+    .form-label { display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: var(--sp-2); }
+    .form-label .req { color: oklch(0.55 0.12 25); }
+    .form-input {
+      width: 100%; padding: var(--sp-3) var(--sp-4);
+      border: 1.5px solid oklch(0.85 0.005 23); border-radius: var(--r-sm);
+      font-family: var(--font-body); font-size: 0.9375rem; color: var(--c-ink); background: var(--c-bg);
+      transition: border-color var(--t);
+    }
+    .form-input:focus { outline: none; border-color: var(--c-primary); }
+    .form-input::placeholder { color: var(--c-muted); opacity: 0.6; }
+    textarea.form-input { resize: vertical; min-height: 80px; }
+    .form-submit {
+      width: 100%; padding: var(--sp-4); background: var(--c-primary); color: var(--c-on-primary);
+      border: none; border-radius: var(--r-sm); font-size: 1rem; font-weight: 500;
+      margin-top: var(--sp-2); transition: background var(--t);
+    }
+    .form-submit:hover { background: oklch(0.360 0.075 23.4); }
+    .dialog__success {
+      display: none; flex-direction: column; align-items: center;
+      text-align: center; padding: var(--sp-12) var(--sp-6); gap: var(--sp-4);
+    }
+    .dialog__success.show { display: flex; }
+    .success-icon {
+      width: 64px; height: 64px; background: oklch(0.95 0.020 140);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    }
+    .success-icon svg { color: oklch(0.45 0.16 140); }
+    .dialog__success h3 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; }
+    .dialog__success p { color: var(--c-muted); font-size: 0.9375rem; max-width: 36ch; line-height: 1.65; }
+
+    /* ─── Hero ────────────────────────────────────────────────────── */
+    .hero {
+      min-height: 100svh; background: var(--c-bg);
+      position: relative; overflow: hidden;
+      display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+      gap: var(--sp-16); padding-block: var(--sp-24);
+      padding-block-start: calc(var(--sp-24) + 64px);
+    }
+    /* Burgundy "pour" overlay — rises from bottom via clip-path on load */
+    .hero__pour {
+      position: absolute; inset: 0;
+      background: var(--c-primary);
+      clip-path: inset(0 0 100% 0); /* starts hidden; GSAP animates to inset(0 0 0% 0) */
+      z-index: 0;
+      will-change: clip-path;
+    }
+    .hero .container, .hero__visual { position: relative; z-index: 1; }
+    .hero__content { color: var(--c-on-primary); }
+    .hero__sub {
+      font-size: 0.75rem; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--c-accent); margin-bottom: var(--sp-4);
+    }
+    .hero__headline {
+      font-family: var(--font-display);
+      font-size: clamp(2.6rem, 5vw, 4.8rem);
+      font-weight: 300; line-height: 1.1; letter-spacing: -0.02em;
+      text-wrap: balance; margin-bottom: var(--sp-5);
+    }
+    .hero__headline em { font-style: italic; font-weight: 400; }
+    .hero__body { font-size: 1rem; font-weight: 300; opacity: 0.8; max-width: 46ch; line-height: 1.75; margin-bottom: var(--sp-8); }
+    .hero__actions { display: flex; gap: var(--sp-4); flex-wrap: wrap; align-items: center; }
+    .btn { display: inline-flex; align-items: center; gap: var(--sp-2); border-radius: var(--r-sm); font-family: var(--font-body); font-weight: 500; transition: var(--t); }
+    .btn--solid {
+      padding: var(--sp-3) var(--sp-8); background: var(--c-on-primary);
+      color: var(--c-primary); border: none; font-size: 0.9375rem;
+    }
+    .btn--solid:hover { background: oklch(1.000 0.000 0); transform: translateY(-1px); }
+    .btn--ghost { padding: 0; background: none; border: none; font-size: 0.9375rem; color: var(--c-on-primary); opacity: 0.7; }
+    .btn--ghost:hover { opacity: 1; }
+    .hero__visual { display: flex; align-items: center; justify-content: center; }
+    .hero__bottle-art { width: clamp(200px, 26vw, 360px); filter: drop-shadow(0 40px 60px oklch(0.18 0.06 23 / 0.5)); opacity: 0.93; }
+
+    /* ─── Section ─────────────────────────────────────────────────── */
+    .section { padding-block: var(--sp-24); }
+    .kicker { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c-accent); margin-bottom: var(--sp-3); }
+    .heading {
+      font-family: var(--font-display); font-size: clamp(1.75rem, 3vw, 2.6rem);
+      font-weight: 400; letter-spacing: -0.02em; line-height: 1.2; text-wrap: balance; margin-bottom: var(--sp-4);
+    }
+
+    /* ─── Catalog ─────────────────────────────────────────────────── */
+    .catalog { background: var(--c-bg); }
+    .catalog__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--sp-6); margin-bottom: var(--sp-8); }
+    .catalog__head .heading { margin-bottom: 0; }
+    .catalog__filters { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+    .filter-btn {
+      padding: var(--sp-2) var(--sp-4); border: 1.5px solid oklch(0.85 0.005 23);
+      background: none; border-radius: var(--r-sm); font-family: var(--font-body);
+      font-size: 0.8125rem; font-weight: 500; color: var(--c-muted); transition: var(--t);
+    }
+    .filter-btn:hover { border-color: var(--c-primary); color: var(--c-primary); }
+    .filter-btn.active { background: var(--c-primary); color: var(--c-on-primary); border-color: var(--c-primary); }
+    .catalog__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(256px, 1fr)); gap: var(--sp-6); }
+
+    /* Card */
+    .card { background: var(--c-surface); border-radius: var(--r-md); overflow: hidden; display: flex; flex-direction: column; transition: box-shadow var(--t), transform var(--t); }
+    .card:hover { box-shadow: 0 16px 48px oklch(0.14 0.008 23 / 0.11); transform: translateY(-3px); }
+    .card__img { aspect-ratio: 3/4; background: var(--c-primary); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .card__img--white  { background: var(--c-primary-hi); }
+    .card__img--rose   { background: var(--c-primary-rose); }
+    .card__img--sparkl { background: var(--c-primary-mid); }
+    .card__bottle { width: 42%; filter: drop-shadow(0 8px 20px oklch(0.10 0.05 23 / 0.4)); }
+    .card__badge {
+      position: absolute; top: var(--sp-3); left: var(--sp-3);
+      font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 3px var(--sp-2); background: var(--c-accent); color: var(--c-ink); border-radius: var(--r-sm);
+    }
+    .card__body { padding: var(--sp-4) var(--sp-5); flex: 1; display: flex; flex-direction: column; gap: var(--sp-1); }
+    .card__brand { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-muted); }
+    .card__name { font-family: var(--font-display); font-size: 1rem; font-weight: 600; line-height: 1.3; color: var(--c-ink); }
+    .card__meta { font-size: 0.8125rem; color: var(--c-muted); }
+    .card__notes { font-size: 0.8125rem; color: var(--c-muted); line-height: 1.55; margin-top: var(--sp-2); flex: 1; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .card__foot { display: flex; align-items: center; justify-content: space-between; padding: var(--sp-3) var(--sp-5) var(--sp-4); border-top: 1px solid oklch(0.90 0.004 23); }
+    .card__price { font-weight: 700; font-size: 1.125rem; color: var(--c-accent); }
+    .card__price-unit { font-size: 0.75rem; font-weight: 400; margin-left: 2px; color: var(--c-muted); }
+    .card__add {
+      padding: var(--sp-2) var(--sp-3); background: none; border: 1.5px solid var(--c-primary);
+      border-radius: var(--r-sm); font-size: 0.8125rem; font-weight: 500; color: var(--c-primary);
+      transition: var(--t); display: flex; align-items: center; gap: var(--sp-1);
+    }
+    .card__add:hover { background: var(--c-primary); color: var(--c-on-primary); }
+
+    /* ─── Story ───────────────────────────────────────────────────── */
+    .story { background: var(--c-surface); }
+    .story__inner { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-16); align-items: center; }
+    .story__panel { aspect-ratio: 4/5; background: var(--c-primary); border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; }
+    .story__panel svg { width: 40%; opacity: 0.8; filter: drop-shadow(0 20px 36px oklch(0.10 0.05 23 / 0.5)); }
+    .story__text { color: var(--c-muted); font-size: 1rem; line-height: 1.75; max-width: 52ch; }
+    .story__text + .story__text { margin-top: var(--sp-4); }
+    .story__cta {
+      display: inline-flex; align-items: center; gap: var(--sp-2); margin-top: var(--sp-8);
+      font-size: 0.9375rem; font-weight: 500; color: var(--c-primary);
+      border-bottom: 1px solid var(--c-primary); padding-bottom: 2px; transition: opacity var(--t);
+    }
+    .story__cta:hover { opacity: 0.7; }
+
+    /* ─── How to Order ────────────────────────────────────────────── */
+    .how-to { background: var(--c-bg); }
+    .how-to__intro { text-align: center; max-width: 48ch; margin-inline: auto; margin-bottom: var(--sp-16); }
+    .how-to__steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-8); position: relative; }
+    .how-to__steps::before { content: ''; position: absolute; top: 28px; left: calc(16.67% + 28px); right: calc(16.67% + 28px); height: 1px; background: oklch(0.86 0.006 23); }
+    .step { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--sp-4); }
+    .step__num { width: 56px; height: 56px; border-radius: 50%; background: var(--c-primary); color: var(--c-on-primary); font-family: var(--font-display); font-size: 1.375rem; font-weight: 600; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
+    .step__title { font-family: var(--font-display); font-size: 1.0625rem; font-weight: 600; color: var(--c-ink); }
+    .step__desc { font-size: 0.9375rem; color: var(--c-muted); line-height: 1.6; max-width: 24ch; }
+
+    /* ─── LINE CTA Band ───────────────────────────────────────────── */
+    .line-band { background: var(--c-primary); padding-block: var(--sp-16); }
+    .line-band__inner { display: grid; grid-template-columns: 1fr auto; gap: var(--sp-8); align-items: center; }
+    .line-band__headline { font-family: var(--font-display); font-size: clamp(1.5rem, 2.8vw, 2.2rem); font-weight: 400; letter-spacing: -0.02em; line-height: 1.25; text-wrap: balance; color: var(--c-on-primary); margin-bottom: var(--sp-3); }
+    .line-band__sub { font-size: 0.9375rem; font-weight: 300; color: var(--c-on-primary); opacity: 0.75; max-width: 52ch; }
+    .line-band__actions { display: flex; gap: var(--sp-4); flex-wrap: wrap; align-items: center; }
+    .btn--line { display: inline-flex; align-items: center; gap: var(--sp-3); padding: var(--sp-3) var(--sp-8); background: var(--c-line); color: #fff; border: none; border-radius: var(--r-sm); font-size: 1rem; font-weight: 500; white-space: nowrap; transition: var(--t); }
+    .btn--line:hover { background: #04a847; transform: translateY(-1px); }
+    .btn--muted { font-size: 0.9375rem; font-weight: 400; color: var(--c-on-primary); background: none; border: none; opacity: 0.7; border-bottom: 1px solid oklch(0.94 0.008 60 / 0.35); padding-bottom: 1px; transition: opacity var(--t); }
+    .btn--muted:hover { opacity: 1; }
+
+    /* ─── Footer ──────────────────────────────────────────────────── */
+    .footer { background: var(--c-footer); padding-block: var(--sp-16) var(--sp-8); color: var(--c-on-primary); }
+    .footer__top { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: var(--sp-12); margin-bottom: var(--sp-12); }
+    .footer__logo { display: flex; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-3); }
+    .footer__logo-mark { width: 30px; height: 35px; }
+    .footer__brand { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; letter-spacing: 0.14em; }
+    .footer__tagline { font-size: 0.9375rem; font-weight: 300; color: var(--c-on-primary); opacity: 0.5; line-height: 1.6; max-width: 30ch; }
+    .footer__col-head { font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-accent); margin-bottom: var(--sp-4); }
+    .footer__list { list-style: none; display: flex; flex-direction: column; gap: var(--sp-2); }
+    .footer__list a { font-size: 0.875rem; color: var(--c-on-primary); opacity: 0.5; transition: opacity var(--t); }
+    .footer__list a:hover { opacity: 1; }
+    .footer__bottom { display: flex; align-items: center; justify-content: space-between; padding-top: var(--sp-6); border-top: 1px solid oklch(1.000 0.000 0 / 0.07); }
+    .footer__copy { font-size: 0.8125rem; color: var(--c-on-primary); opacity: 0.3; }
+    .footer__line-link { display: inline-flex; align-items: center; gap: var(--sp-2); font-size: 0.8125rem; font-weight: 500; color: var(--c-line); opacity: 0.75; transition: opacity var(--t); }
+    .footer__line-link:hover { opacity: 1; }
+
+    /* ─── Scroll Reveal ───────────────────────────────────────────── */
+    /* GSAP handles reveal; .in fallback for no-GSAP path */
+    .reveal { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal { opacity: 0; transform: translateY(18px); transition: opacity 460ms var(--ease), transform 460ms var(--ease); }
+      .reveal.in { opacity: 1; transform: none; }
+      /* Hero elements hidden until GSAP pour sequence reveals them */
+      .hero__sub, .hero__headline, .hero__body, .hero__actions, .hero__bottle-art { opacity: 0; }
+    }
+
+    /* ─── Responsive ──────────────────────────────────────────────── */
+    @media (max-width: 920px) {
+      .hero { grid-template-columns: 1fr; text-align: center; }
+      .hero__content { order: 1; }
+      .hero__visual { order: 0; }
+      .hero__body, .hero__actions { margin-inline: auto; }
+      .hero__actions { justify-content: center; }
+      .story__inner { grid-template-columns: 1fr; }
+      .story__panel { max-width: 320px; margin-inline: auto; }
+      .story__text { max-width: none; }
+      .how-to__steps { grid-template-columns: 1fr; }
+      .how-to__steps::before { display: none; }
+      .line-band__inner { grid-template-columns: 1fr; }
+      .footer__top { grid-template-columns: 1fr 1fr; }
+      .nav__links { display: none; }
+    }
+    @media (max-width: 600px) {
+      .footer__top { grid-template-columns: 1fr; }
+      .footer__bottom { flex-direction: column; gap: var(--sp-3); text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── Nav ─────────────────────────────────────────────────────── -->
+  <nav class="nav" id="nav" aria-label="เมนูหลัก">
+    <div class="container nav__inner">
+      <a href="#" class="nav__logo" aria-label="Alees Wine — หน้าแรก">
+        <!-- Wine-rack "A" logo mark -->
+        <svg class="nav__logo-mark" viewBox="0 0 72 84" fill="none" aria-hidden="true">
+          <line x1="36" y1="4"  x2="4"  y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="36" y1="4"  x2="68" y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="4"  y1="78" x2="20" y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="52" y1="78" x2="68" y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="18" y1="54" x2="54" y2="54" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="28" cy="26" rx="7.5" ry="9.5" stroke="currentColor" stroke-width="2.2" fill="none"/>
+          <ellipse cx="28" cy="26" rx="2.8" ry="3.5" fill="currentColor" opacity="0.55"/>
+          <ellipse cx="19" cy="44" rx="7"   ry="9"   stroke="currentColor" stroke-width="2.2" fill="none"/>
+          <ellipse cx="19" cy="44" rx="2.6" ry="3.2" fill="currentColor" opacity="0.55"/>
+          <ellipse cx="44" cy="26" rx="7.5" ry="9.5" stroke="currentColor" stroke-width="2.2" fill="none"/>
+          <ellipse cx="44" cy="26" rx="2.8" ry="3.5" fill="currentColor" opacity="0.55"/>
+          <ellipse cx="53" cy="44" rx="7"   ry="9"   stroke="currentColor" stroke-width="2.2" fill="none"/>
+          <ellipse cx="53" cy="44" rx="2.6" ry="3.2" fill="currentColor" opacity="0.55"/>
+          <ellipse cx="30" cy="11" rx="6"   ry="7.5" stroke="currentColor" stroke-width="2"   fill="none"/>
+          <ellipse cx="42" cy="11" rx="6"   ry="7.5" stroke="currentColor" stroke-width="2"   fill="none"/>
+        </svg>
+        <span class="nav__logo-word">LEES</span>
+      </a>
+
+      <ul class="nav__links" role="list">
+        <li><a href="#catalog">รายการสินค้า</a></li>
+        <li><a href="#about">เกี่ยวกับเรา</a></li>
+        <li><a href="#how-to-order">วิธีสั่งซื้อ</a></li>
+        <li><a href="#contact">ติดต่อ</a></li>
+      </ul>
+
+      <div class="nav__actions">
+        <button class="nav__cart-btn" id="cart-btn" aria-label="ตะกร้าสินค้า">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          <span id="cart-count" class="nav__cart-badge" aria-live="polite"></span>
+        </button>
+        <a href="https://line.me/R/ti/p/@aleesofficial" class="nav__line-btn" target="_blank" rel="noopener noreferrer">Line@ สั่งซื้อ</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─── Cart Overlay + Drawer ───────────────────────────────────── -->
+  <div class="cart-overlay" id="cart-overlay" role="presentation"></div>
+  <aside class="cart-drawer" id="cart-drawer" aria-label="ตะกร้าสินค้า">
+    <div class="cart-drawer__head">
+      <h2 class="cart-drawer__title">ตะกร้าสินค้า</h2>
+      <button class="cart-close-btn" id="cart-close" aria-label="ปิดตะกร้า">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="cart-drawer__body" id="cart-body">
+      <div class="cart-empty" id="cart-empty">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <p>ยังไม่มีสินค้าในตะกร้า</p>
+      </div>
+      <div id="cart-items"></div>
+    </div>
+    <div class="cart-drawer__foot">
+      <div class="cart-total">
+        <span class="cart-total__label">ยอดรวมทั้งหมด</span>
+        <span class="cart-total__amount" id="cart-total">฿ 0</span>
+      </div>
+      <button class="cart-order-btn" id="cart-order-btn" disabled>ส่งคำสั่งซื้อ →</button>
+    </div>
+  </aside>
+
+  <!-- ─── Order Dialog ─────────────────────────────────────────────── -->
+  <dialog class="order-dialog" id="order-dialog" aria-label="ฟอร์มส่งคำสั่งซื้อ">
+    <div class="dialog__head">
+      <h2 class="dialog__title">ส่งคำสั่งซื้อ</h2>
+      <button class="dialog__close" id="dialog-close" aria-label="ปิด">&#x2715;</button>
+    </div>
+    <div class="dialog__body">
+      <div id="dialog-content">
+        <div class="dialog__summary" id="dialog-summary"></div>
+        <form id="order-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="f-name">ชื่อ-นามสกุล <span class="req">*</span></label>
+            <input class="form-input" type="text" id="f-name" placeholder="กรอกชื่อ-นามสกุล" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="f-phone">เบอร์โทรศัพท์ <span class="req">*</span></label>
+            <input class="form-input" type="tel" id="f-phone" placeholder="08X-XXX-XXXX" required autocomplete="tel">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="f-line">Line ID <span class="req">*</span></label>
+            <input class="form-input" type="text" id="f-line" placeholder="@your_line_id" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="f-note">หมายเหตุเพิ่มเติม</label>
+            <textarea class="form-input" id="f-note" placeholder="ที่อยู่จัดส่ง หรือคำถามเกี่ยวกับสินค้า"></textarea>
+          </div>
+          <button type="submit" class="form-submit">ยืนยันและส่งคำสั่งซื้อ</button>
+        </form>
+      </div>
+      <div class="dialog__success" id="dialog-success">
+        <div class="success-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3>ส่งคำสั่งซื้อเรียบร้อย!</h3>
+        <p>ทีมงาน Alees จะติดต่อกลับภายใน 24 ชั่วโมงผ่าน Line เพื่อยืนยันรายการและแจ้งรายละเอียดการชำระเงิน</p>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ─── Hero ─────────────────────────────────────────────────────── -->
+  <section class="hero section" aria-labelledby="hero-h">
+    <div class="hero__pour" aria-hidden="true"></div>
+    <div class="container hero__content">
+      <p class="hero__sub">Alees Wine Selection — อาลีส์</p>
+      <h1 class="hero__headline" id="hero-h">
+        ไวน์คุณภาพ<br>
+        <em>จากอิตาลีถึงคุณ</em>
+      </h1>
+      <p class="hero__body">คัดสรรไวน์จากแหล่งผลิตชั้นนำในอิตาลี ทุกขวดผ่านการเลือกสรรด้วยความใส่ใจ ดูรายละเอียดและราคา แล้วสั่งง่ายผ่าน Line@</p>
+      <div class="hero__actions">
+        <a href="#catalog" class="btn btn--solid">ดูรายการสินค้า</a>
+        <a href="#how-to-order" class="btn btn--ghost">วิธีสั่งซื้อ <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+    <div class="hero__visual" aria-hidden="true">
+      <svg class="hero__bottle-art" viewBox="0 0 220 540" fill="none">
+        <path d="M72 220C50 258 44 312 44 360L44 450C44 484 60 498 110 498 C160 498 176 484 176 450L176 360C176 312 170 258 148 220Z" fill="oklch(0.94 0.008 60/0.10)" stroke="oklch(0.94 0.008 60/0.28)" stroke-width="1.5"/>
+        <path d="M72 220L82 164L138 164L148 220" fill="oklch(0.94 0.008 60/0.10)" stroke="oklch(0.94 0.008 60/0.28)" stroke-width="1.5"/>
+        <rect x="84" y="86"  width="52" height="80" rx="5" fill="oklch(0.94 0.008 60/0.10)" stroke="oklch(0.94 0.008 60/0.28)" stroke-width="1.5"/>
+        <rect x="91" y="60" width="38" height="30" rx="4" fill="oklch(0.72 0.055 50/0.72)"/>
+        <rect x="84" y="86" width="52" height="16" fill="oklch(0.94 0.008 60/0.20)"/>
+        <rect x="56" y="300" width="108" height="130" rx="3" fill="oklch(0.94 0.008 60/0.11)" stroke="oklch(0.94 0.008 60/0.26)" stroke-width="1"/>
+        <!-- Mini logo inside label -->
+        <line x1="110" y1="316" x2="94"  y2="344" stroke="oklch(0.94 0.008 60/0.65)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="110" y1="316" x2="126" y2="344" stroke="oklch(0.94 0.008 60/0.65)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="100" y1="334" x2="120" y2="334" stroke="oklch(0.94 0.008 60/0.45)" stroke-width="1.2" stroke-linecap="round"/>
+        <text x="110" y="368" text-anchor="middle" font-family="Georgia,serif" font-size="12" font-weight="700" letter-spacing="3.5" fill="oklch(0.94 0.008 60/0.90)">LEES</text>
+        <text x="110" y="386" text-anchor="middle" font-family="Georgia,serif" font-size="7"  letter-spacing="2.2" fill="oklch(0.94 0.008 60/0.52)">WINE SELECTION</text>
+        <line x1="72" y1="397" x2="148" y2="397" stroke="oklch(0.68 0.115 78/0.48)" stroke-width="0.8"/>
+        <text x="110" y="413" text-anchor="middle" font-family="Georgia,serif" font-size="7"  letter-spacing="1.5" fill="oklch(0.94 0.008 60/0.42)">อาลีส์</text>
+        <path d="M66 492 Q110 480 154 492" stroke="oklch(0.94 0.008 60/0.16)" stroke-width="1" fill="none"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ─── Catalog ───────────────────────────────────────────────────── -->
+  <section class="catalog section" id="catalog" aria-labelledby="catalog-h">
+    <div class="container">
+      <div class="catalog__head">
+        <div>
+          <p class="kicker">รายการสินค้า</p>
+          <h2 class="heading" id="catalog-h">ไวน์คัดสรรของเรา</h2>
+        </div>
+        <div class="catalog__filters" role="group" aria-label="กรองประเภทไวน์">
+          <button class="filter-btn active" data-f="all">ทั้งหมด</button>
+          <button class="filter-btn" data-f="red">แดง</button>
+          <button class="filter-btn" data-f="white">ขาว</button>
+          <button class="filter-btn" data-f="sparkling">สปาร์กลิง</button>
+        </div>
+      </div>
+      <div class="catalog__grid" id="catalog-grid" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- ─── Brand Story ───────────────────────────────────────────────── -->
+  <section class="story section" id="about" aria-labelledby="story-h">
+    <div class="container story__inner">
+      <div class="story__panel" aria-hidden="true">
+        <svg viewBox="0 0 180 480" fill="none">
+          <path d="M62 200C42 230 36 280 36 320L36 400C36 430 50 444 90 444 C130 444 144 430 144 400L144 320C144 280 138 230 118 200Z" fill="oklch(0.94 0.008 60/0.09)" stroke="oklch(0.94 0.008 60/0.26)" stroke-width="1.5"/>
+          <path d="M62 200L70 150L110 150L118 200" fill="oklch(0.94 0.008 60/0.09)" stroke="oklch(0.94 0.008 60/0.26)" stroke-width="1.5"/>
+          <rect x="72" y="80" width="36" height="72" rx="4" fill="oklch(0.94 0.008 60/0.09)" stroke="oklch(0.94 0.008 60/0.26)" stroke-width="1.5"/>
+          <rect x="78" y="58" width="24" height="26" rx="3" fill="oklch(0.72 0.055 50/0.68)"/>
+          <rect x="72" y="80" width="36" height="13" fill="oklch(0.94 0.008 60/0.18)"/>
+          <rect x="48" y="272" width="84" height="108" rx="2" fill="oklch(0.94 0.008 60/0.10)" stroke="oklch(0.94 0.008 60/0.22)" stroke-width="0.8"/>
+          <text x="90" y="310" text-anchor="middle" font-family="Georgia" font-size="11" font-weight="700" letter-spacing="3.5" fill="oklch(0.94 0.008 60/0.85)">LEES</text>
+          <text x="90" y="328" text-anchor="middle" font-family="Georgia" font-size="6.5" letter-spacing="2" fill="oklch(0.94 0.008 60/0.48)">WINE SELECTION</text>
+          <line x1="60" y1="338" x2="120" y2="338" stroke="oklch(0.68 0.115 78/0.42)" stroke-width="0.7"/>
+          <text x="90" y="352" text-anchor="middle" font-family="Georgia" font-size="6.5" letter-spacing="1" fill="oklch(0.94 0.008 60/0.38)">อาลีส์</text>
+        </svg>
+      </div>
+      <div class="reveal d1">
+        <p class="kicker">เรื่องราวของเรา</p>
+        <h2 class="heading" id="story-h">ความหลงใหลในไวน์<br>ที่มีเรื่องราว</h2>
+        <p class="story__text">Alees เริ่มต้นจากความเชื่อว่าไวน์คุณภาพสูงควรเข้าถึงได้ เราคัดสรรไวน์จากแหล่งผลิตชั้นนำในอิตาลี ตั้งแต่ Piedmont ถึง Veneto ทุกขวดผ่านการเลือกสรรด้วยความใส่ใจ ไม่ใช่แค่ยี่ห้อ แต่คือเรื่องราวของดิน น้ำ และผู้คนที่อยู่เบื้องหลังทุกขวด</p>
+        <p class="story__text">จาก Barolo อันยิ่งใหญ่ของ Piedmont ไปจนถึง Prosecco สดใสของ Veneto เราเลือกเฉพาะที่รสชาติสะท้อนถึงคุณภาพและความตั้งใจของผู้ผลิต เพื่อให้คุณได้ประสบการณ์ที่ดีที่สุด</p>
+        <a href="#catalog" class="story__cta">ดูรายการสินค้าทั้งหมด →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── How to Order ─────────────────────────────────────────────── -->
+  <section class="how-to section" id="how-to-order" aria-labelledby="how-h">
+    <div class="container">
+      <div class="how-to__intro">
+        <p class="kicker">วิธีสั่งซื้อ</p>
+        <h2 class="heading" id="how-h">ง่ายกว่าที่คิด เพียง 3 ขั้นตอน</h2>
+        <p style="font-size:1rem;color:var(--c-muted)">จากการดู catalog ไปจนถึงได้รับไวน์ที่คุณต้องการ</p>
+      </div>
+      <div class="how-to__steps">
+        <div class="step reveal">
+          <div class="step__num" aria-hidden="true">1</div>
+          <h3 class="step__title">เลือกสินค้าที่ต้องการ</h3>
+          <p class="step__desc">ดูรายละเอียดและราคาของไวน์แต่ละขวด เพิ่มลงตะกร้าที่ชอบ</p>
+        </div>
+        <div class="step reveal d1">
+          <div class="step__num" aria-hidden="true">2</div>
+          <h3 class="step__title">ส่งคำสั่งซื้อ</h3>
+          <p class="step__desc">กรอกชื่อ เบอร์โทร และ Line ID เพื่อให้ทีมงานติดต่อกลับ</p>
+        </div>
+        <div class="step reveal d2">
+          <div class="step__num" aria-hidden="true">3</div>
+          <h3 class="step__title">รับไวน์ที่บ้าน</h3>
+          <p class="step__desc">ยืนยัน order และชำระเงิน เราจัดส่งถึงบ้านพร้อมบรรจุภัณฑ์ปลอดภัย</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── LINE CTA Band ────────────────────────────────────────────── -->
+  <section class="line-band" id="contact" aria-labelledby="cta-h">
+    <div class="container line-band__inner">
+      <div>
+        <h2 class="line-band__headline" id="cta-h">มีคำถามหรือพร้อมสั่งซื้อแล้ว?<br><em style="font-style:italic;font-family:var(--font-display);font-weight:300">คุยกับเราได้เลยทาง Line@</em></h2>
+        <p class="line-band__sub">ทีมงานพร้อมแนะนำ ตอบทุกคำถามเกี่ยวกับไวน์ และดูแลคำสั่งซื้อของคุณอย่างใส่ใจ</p>
+      </div>
+      <div class="line-band__actions">
+        <a href="https://line.me/R/ti/p/@aleesofficial" class="btn btn--line" target="_blank" rel="noopener noreferrer" aria-label="เพิ่มเพื่อน Line@ Alees">
+          <svg width="20" height="20" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M11 2C6.03 2 2 5.478 2 9.75c0 3.804 3.178 6.984 7.496 7.635.292.064.69.194.79.448.091.23.06.59.029.822l-.128.778c-.039.235-.18.92.807.501.987-.42 5.323-3.134 7.265-5.364C19.561 12.842 20 11.35 20 9.75 20 5.478 15.97 2 11 2z" fill="white"/>
+          </svg>
+          เพิ่มเพื่อนใน Line@
+        </a>
+        <button class="btn btn--muted" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">ดู catalog ก่อน</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Footer ───────────────────────────────────────────────────── -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__top">
+        <div>
+          <div class="footer__logo">
+            <svg class="footer__logo-mark" viewBox="0 0 72 84" fill="none" aria-hidden="true">
+              <line x1="36" y1="4"  x2="4"  y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="36" y1="4"  x2="68" y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="4"  y1="78" x2="20" y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="52" y1="78" x2="68" y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="18" y1="54" x2="54" y2="54" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <ellipse cx="28" cy="26" rx="7.5" ry="9.5" stroke="currentColor" stroke-width="2.2" fill="none"/>
+              <ellipse cx="19" cy="44" rx="7"   ry="9"   stroke="currentColor" stroke-width="2.2" fill="none"/>
+              <ellipse cx="44" cy="26" rx="7.5" ry="9.5" stroke="currentColor" stroke-width="2.2" fill="none"/>
+              <ellipse cx="53" cy="44" rx="7"   ry="9"   stroke="currentColor" stroke-width="2.2" fill="none"/>
+              <ellipse cx="30" cy="11" rx="6"   ry="7.5" stroke="currentColor" stroke-width="2"   fill="none"/>
+              <ellipse cx="42" cy="11" rx="6"   ry="7.5" stroke="currentColor" stroke-width="2"   fill="none"/>
+            </svg>
+            <span class="footer__brand">LEES</span>
+          </div>
+          <p class="footer__tagline">ไวน์คุณภาพคัดสรรจากอิตาลี เพื่อทุกโอกาสพิเศษในชีวิตคุณ</p>
+        </div>
+        <nav aria-label="ลิงก์เมนู">
+          <p class="footer__col-head">เมนู</p>
+          <ul class="footer__list" role="list">
+            <li><a href="#catalog">รายการสินค้า</a></li>
+            <li><a href="#about">เกี่ยวกับเรา</a></li>
+            <li><a href="#how-to-order">วิธีสั่งซื้อ</a></li>
+          </ul>
+        </nav>
+        <div>
+          <p class="footer__col-head">ติดต่อ</p>
+          <ul class="footer__list" role="list">
+            <li><a href="https://line.me/R/ti/p/@aleesofficial" target="_blank" rel="noopener">Line@: @aleesofficial</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copy">© 2025 Alees Wine (อาลีส์). สงวนลิขสิทธิ์</p>
+        <a href="https://line.me/R/ti/p/@aleesofficial" class="footer__line-link" target="_blank" rel="noopener noreferrer">
+          <svg width="14" height="14" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M11 2C6.03 2 2 5.478 2 9.75c0 3.804 3.178 6.984 7.496 7.635.292.064.69.194.79.448.091.23.06.59.029.822l-.128.778c-.039.235-.18.92.807.501.987-.42 5.323-3.134 7.265-5.364C19.561 12.842 20 11.35 20 9.75 20 5.478 15.97 2 11 2z" fill="#06C755"/>
+          </svg>
+          Line@: @aleesofficial
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lenis smooth scroll + GSAP + ScrollTrigger -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    /* ─── Product Data (from Alees catalog PDF) ─────────────────── */
+    const WINES = [
+      { id:1, type:'red',      bg:'',
+        brand:'Adriano Marco e Vittorio', name:'Freisa Langhe DOC 2021',
+        region:'Piedmont, Italy', grape:'Freisa', vol:'13%', price:1820,
+        notes:'Intense ruby red. Notes of cherry, strawberry and rose. Crisp, fragrant, moderate body balanced by correct tannins.' },
+      { id:2, type:'red',      bg:'',
+        brand:'Adriano Marco e Vittorio', name:'Barbaresco DOCG Sansalmo 2022',
+        region:'Piedmont, Italy', grape:'100% Nebbiolo', vol:'14%', price:2200,
+        notes:'Intense ruby red with aromas of cherry and raspberry. Crisp and fragrant, moderate body balanced by correct tannins.' },
+      { id:3, type:'red',      bg:'',
+        brand:'Marchesi Di Barolo', name:'Barolo di Barolo DOCG 2019',
+        region:'Piedmont, Italy', grape:'100% Nebbiolo', vol:'14.5%', price:3000,
+        notes:'Garnet red. Clean scents of spices, cinnamon, absinthe, tobacco and rose bush. Full and elegant with soft tannins.' },
+      { id:4, type:'red',      bg:'',
+        brand:'Cordero Di Montezemolo', name:'Barolo Monfalletto DOCG 2021',
+        region:'Piedmont, Italy', grape:'100% Nebbiolo', vol:'14.5%', price:3450,
+        notes:'Intense garnet. Floral and spicy: tobacco, cherries, cocoa, fresh raspberry highlights. Rich, full-bodied and elegant.' },
+      { id:5, type:'white',    bg:'card__img--white',
+        brand:'Pelissero', name:'Langhe Riesling Rigadin DOC 2024',
+        region:'Piedmont, Italy', grape:'100% Riesling', vol:'12.5%', price:1290,
+        notes:'Yellow-green shades. Honey aromas, butter, citrus and apricot. Structured and tasty with a mineral note.' },
+      { id:6, type:'white',    bg:'card__img--white',
+        brand:'St. Pauls', name:'Pinot Grigio Alto Adige DOC 2024',
+        region:'Alto Adige, Italy', grape:'100% Pinot Grigio', vol:'13.5%', price:1150,
+        notes:'Exotic spices, ripe pears and melon. Juicy acidity and full mouthfeel. Perfect with seafood and light dishes.' },
+      { id:7, type:'sparkling', bg:'card__img--rose',
+        brand:'ASOLO', name:'Spumante Rosé Extra Dry NV',
+        region:'Veneto, Italy', grape:'Pinot Noir', vol:'11.5%', price:950,
+        notes:'Cherry-red with fine persistent perlage. Elegant with hints of cherry, raspberry, currant and delicate flower notes.' },
+      { id:8, type:'sparkling', bg:'card__img--sparkl',
+        brand:'Tenuta Baron', name:'Spumante Buchet Brut NV',
+        region:'Veneto, Italy', grape:'Glera', vol:'11.5%', price:860,
+        notes:'Straw yellow with greenish reflections. Fresh bouquet: gooseberries, white flowers, green apple. Fine bubbles, crisp.' }
+    ];
+
+    const TYPE_TH = { red:'แดง', white:'ขาว', sparkling:'สปาร์กลิง' };
+
+    function miniBottle() {
+      return `<svg class="card__bottle" viewBox="0 0 80 210" fill="none" aria-hidden="true">
+        <path d="M26 86C18 100 15 128 15 150L15 183C15 197 24 205 40 205 C56 205 65 197 65 183L65 150C65 128 62 100 54 86Z" fill="oklch(0.94 0.008 60/.15)" stroke="oklch(0.94 0.008 60/.40)" stroke-width="1.2"/>
+        <path d="M26 86L30 64L50 64L54 86" fill="oklch(0.94 0.008 60/.15)" stroke="oklch(0.94 0.008 60/.40)" stroke-width="1.2"/>
+        <rect x="31" y="30" width="18" height="36" rx="2" fill="oklch(0.94 0.008 60/.15)" stroke="oklch(0.94 0.008 60/.38)" stroke-width="1.2"/>
+        <rect x="34" y="20" width="12" height="13" rx="2" fill="oklch(0.72 0.055 50/.68)"/>
+        <rect x="22" y="118" width="36" height="50" rx="2" fill="oklch(0.94 0.008 60/.13)" stroke="oklch(0.94 0.008 60/.30)" stroke-width="0.8"/>
+        <text x="40" y="140" text-anchor="middle" font-family="Georgia" font-size="5.5" font-weight="700" letter-spacing="1.5" fill="oklch(0.94 0.008 60/.88)">LEES</text>
+      </svg>`;
+    }
+
+    /* ─── Motion preference (global flag) ───────────────────────── */
+    const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ─── Render Catalog ─────────────────────────────────────────── */
+    function renderCatalog(filter) {
+      const grid = document.getElementById('catalog-grid');
+      const list = filter === 'all' ? WINES : WINES.filter(w => w.type === filter);
+      grid.innerHTML = list.map(w => `
+        <article class="card" aria-label="${w.brand} ${w.name}">
+          <div class="card__img ${w.bg}">
+            ${miniBottle()}
+            <span class="card__badge">${TYPE_TH[w.type]}</span>
+          </div>
+          <div class="card__body">
+            <p class="card__brand">${w.brand}</p>
+            <h3 class="card__name">${w.name}</h3>
+            <p class="card__meta">${w.region} · ${w.grape} · ${w.vol}</p>
+            <p class="card__notes">${w.notes}</p>
+          </div>
+          <div class="card__foot">
+            <span class="card__price">฿ ${w.price.toLocaleString()}<span class="card__price-unit">THB</span></span>
+            <button class="card__add" onclick="addToCart(${w.id})" aria-label="เพิ่ม ${w.name} ลงตะกร้า">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/></svg>
+              เพิ่มลงตะกร้า
+            </button>
+          </div>
+        </article>`).join('');
+      /* Animate cards in — GSAP if available, CSS fallback otherwise */
+      if (!REDUCED && window.gsap) {
+        const cards = grid.querySelectorAll('.card');
+        gsap.fromTo(cards,
+          { opacity: 0, y: 28, scale: 0.96 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.07, ease: 'power2.out',
+            onComplete: () => gsap.set(cards, { clearProps: 'transform' }) }
+        );
+      }
+    }
+
+    document.querySelectorAll('.filter-btn').forEach(btn =>
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderCatalog(btn.dataset.f);
+      })
+    );
+
+    /* ─── Cart ───────────────────────────────────────────────────── */
+    let cart = [];
+
+    function addToCart(id) {
+      const w = WINES.find(x => x.id === id);
+      if (!w) return;
+      const ex = cart.find(x => x.id === id);
+      ex ? ex.qty++ : cart.push({ ...w, qty: 1 });
+      syncCart();
+      openCart();
+    }
+
+    function updateQty(id, d) {
+      const item = cart.find(x => x.id === id);
+      if (!item) return;
+      item.qty = Math.max(0, item.qty + d);
+      if (item.qty === 0) cart = cart.filter(x => x.id !== id);
+      syncCart();
+    }
+
+    function syncCart() {
+      const count = cart.reduce((s, i) => s + i.qty, 0);
+      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+
+      const badge = document.getElementById('cart-count');
+      badge.textContent = count;
+      badge.classList.toggle('visible', count > 0);
+
+      document.getElementById('cart-empty').style.display = cart.length ? 'none' : 'flex';
+      document.getElementById('cart-items').innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <div class="cart-item__thumb">
+            <svg width="20" height="32" viewBox="0 0 30 50" fill="none" aria-hidden="true">
+              <path d="M8 20C5 24 4 32 4 38L4 44C4 48 7 50 15 50C23 50 26 48 26 44L26 38C26 32 25 24 22 20Z" fill="oklch(0.94 0.008 60/.20)" stroke="oklch(0.94 0.008 60/.5)" stroke-width="1"/>
+              <path d="M8 20L10 14L20 14L22 20" fill="oklch(0.94 0.008 60/.20)" stroke="oklch(0.94 0.008 60/.5)" stroke-width="1"/>
+              <rect x="10" y="6" width="10" height="10" rx="1" fill="oklch(0.94 0.008 60/.20)" stroke="oklch(0.94 0.008 60/.4)" stroke-width="0.8"/>
+              <rect x="11" y="2" width="8" height="6" rx="1" fill="oklch(0.72 0.055 50/.6)"/>
+            </svg>
+          </div>
+          <div class="cart-item__info">
+            <p class="cart-item__brand">${item.brand}</p>
+            <p class="cart-item__name">${item.name}</p>
+            <p class="cart-item__price">฿ ${(item.price * item.qty).toLocaleString()} THB</p>
+          </div>
+          <div class="cart-item__qty">
+            <button class="qty-btn" onclick="updateQty(${item.id},1)" aria-label="เพิ่ม">+</button>
+            <span class="qty-num">${item.qty}</span>
+            <button class="qty-btn" onclick="updateQty(${item.id},-1)" aria-label="ลด">−</button>
+          </div>
+        </div>`).join('');
+
+      document.getElementById('cart-total').textContent = `฿ ${total.toLocaleString()}`;
+      document.getElementById('cart-order-btn').disabled = cart.length === 0;
+    }
+
+    function openCart() {
+      document.getElementById('cart-drawer').classList.add('open');
+      document.getElementById('cart-overlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeCart() {
+      document.getElementById('cart-drawer').classList.remove('open');
+      document.getElementById('cart-overlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('cart-btn').addEventListener('click', openCart);
+    document.getElementById('cart-close').addEventListener('click', closeCart);
+    document.getElementById('cart-overlay').addEventListener('click', closeCart);
+
+    /* ─── Order Dialog ────────────────────────────────────────────── */
+    const dialog = document.getElementById('order-dialog');
+
+    document.getElementById('cart-order-btn').addEventListener('click', () => {
+      closeCart();
+      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      document.getElementById('dialog-summary').innerHTML = `
+        <p class="dialog__summary-title">สรุปรายการสั่งซื้อ</p>
+        ${cart.map(i => `<div class="dialog__summary-item"><span>${i.name} ×${i.qty}</span><span>฿ ${(i.price*i.qty).toLocaleString()}</span></div>`).join('')}
+        <div class="dialog__summary-total"><span>รวมทั้งหมด</span><span class="dialog__summary-total-amount">฿ ${total.toLocaleString()} THB</span></div>`;
+      document.getElementById('dialog-content').style.display = 'block';
+      document.getElementById('dialog-success').classList.remove('show');
+      document.getElementById('order-form').reset();
+      dialog.showModal();
+    });
+
+    document.getElementById('dialog-close').addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
+
+    document.getElementById('order-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const name  = document.getElementById('f-name').value.trim();
+      const phone = document.getElementById('f-phone').value.trim();
+      const line  = document.getElementById('f-line').value.trim();
+      if (!name || !phone || !line) { alert('กรุณากรอกข้อมูลที่จำเป็น (ชื่อ, เบอร์โทร, Line ID)'); return; }
+      document.getElementById('dialog-content').style.display = 'none';
+      document.getElementById('dialog-success').classList.add('show');
+      cart = [];
+      syncCart();
+    });
+
+    /* ─── Init ───────────────────────────────────────────────────── */
+    renderCatalog('all');
+    syncCart();
+
+    /* ─── Animation System ───────────────────────────────────────── */
+    const navEl = document.getElementById('nav');
+
+    if (REDUCED || !window.gsap) {
+      /* Reduced-motion / no-GSAP fallback: show everything immediately */
+      const pour = document.querySelector('.hero__pour');
+      if (pour) pour.style.clipPath = 'inset(0 0 0% 0)';
+      document.querySelectorAll(
+        '.hero__sub,.hero__headline,.hero__actions,.hero__bottle-art'
+      ).forEach(el => (el.style.opacity = '1'));
+      const hb = document.querySelector('.hero__body');
+      if (hb) hb.style.opacity = '0.8';
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+      /* Nav scroll — IntersectionObserver fallback */
+      new IntersectionObserver(
+        ([e]) => navEl.classList.toggle('nav--scrolled', !e.isIntersecting),
+        { threshold: 0.05, rootMargin: '-56px 0px 0px 0px' }
+      ).observe(document.querySelector('.hero'));
+    } else {
+      gsap.registerPlugin(ScrollTrigger);
+
+      /* ── Lenis smooth scroll, integrated with GSAP ticker ── */
+      const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+
+      /* ── Nav scrolled state via ScrollTrigger ── */
+      ScrollTrigger.create({
+        trigger: '.hero',
+        start: 'bottom 90px',
+        onEnter: ()     => navEl.classList.add('nav--scrolled'),
+        onLeaveBack: () => navEl.classList.remove('nav--scrolled'),
+      });
+
+      /* ── Hero: Pouring load sequence ── */
+      const heroTl = gsap.timeline({ delay: 0.15 });
+
+      /* 1 — Burgundy pours in from below (clip-path rises) */
+      heroTl.fromTo('.hero__pour',
+        { clipPath: 'inset(0 0 100% 0)' },
+        { clipPath: 'inset(0 0 0% 0)', duration: 1.45, ease: 'power2.inOut' },
+        0
+      );
+
+      /* 2 — Bottle rises during the pour */
+      heroTl.fromTo('.hero__bottle-art',
+        { opacity: 0, y: 72 },
+        { opacity: 0.93, y: 0, duration: 1.15, ease: 'power3.out' },
+        0.45
+      );
+
+      /* 3 — Kicker appears as pour completes */
+      heroTl.fromTo('.hero__sub',
+        { opacity: 0, y: 18 },
+        { opacity: 1,  y: 0, duration: 0.55, ease: 'power2.out' },
+        0.90
+      );
+
+      /* 4 — Headline */
+      heroTl.fromTo('.hero__headline',
+        { opacity: 0, y: 30 },
+        { opacity: 1,  y: 0, duration: 0.80, ease: 'power2.out' },
+        1.02
+      );
+
+      /* 5 — Body copy (stays at 0.8 per design), then actions */
+      heroTl.fromTo('.hero__body',
+        { opacity: 0, y: 22 },
+        { opacity: 0.8, y: 0, duration: 0.60, ease: 'power2.out' },
+        1.22
+      );
+      heroTl.fromTo('.hero__actions',
+        { opacity: 0, y: 22 },
+        { opacity: 1,  y: 0, duration: 0.60, ease: 'power2.out' },
+        1.35
+      );
+
+      /* ── Bottle parallax on scroll ── */
+      gsap.to('.hero__bottle-art', {
+        y: -90, ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1.4
+        }
+      });
+
+      /* ── Section reveals (replaces IntersectionObserver) ── */
+      document.querySelectorAll('.reveal').forEach(el => {
+        gsap.fromTo(el,
+          { opacity: 0, y: 28 },
+          { opacity: 1,  y: 0, duration: 0.65, ease: 'power2.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+          }
+        );
+      });
+
+      /* ── Catalog & story heading slides ── */
+      document.querySelectorAll(
+        '.catalog .heading, .story .heading, .how-to .heading'
+      ).forEach(el => {
+        gsap.fromTo(el,
+          { opacity: 0, y: 20 },
+          { opacity: 1,  y: 0, duration: 0.70, ease: 'power2.out',
+            scrollTrigger: { trigger: el, start: 'top 86%', once: true }
+          }
+        );
+      });
+
+      /* ── Kicker labels ── */
+      document.querySelectorAll(
+        '.catalog .kicker, .story .kicker, .how-to__intro .kicker'
+      ).forEach(el => {
+        gsap.fromTo(el,
+          { opacity: 0, x: -14 },
+          { opacity: 1,  x: 0, duration: 0.50, ease: 'power2.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+          }
+        );
+      });
+
+      /* ── Step number pop ── */
+      document.querySelectorAll('.step__num').forEach((el, i) => {
+        gsap.fromTo(el,
+          { scale: 0.4, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.55, delay: i * 0.12, ease: 'back.out(2.2)',
+            scrollTrigger: { trigger: '.how-to__steps', start: 'top 78%', once: true }
+          }
+        );
+      });
+
+      /* ── LINE band — text slides from left, actions from right ── */
+      gsap.fromTo('.line-band__headline, .line-band__sub',
+        { opacity: 0, x: -36 },
+        { opacity: 1,  x: 0, duration: 0.80, stagger: 0.14, ease: 'power2.out',
+          scrollTrigger: { trigger: '.line-band', start: 'top 82%', once: true }
+        }
+      );
+      gsap.fromTo('.line-band__actions',
+        { opacity: 0, x: 36 },
+        { opacity: 1,  x: 0, duration: 0.80, ease: 'power2.out',
+          scrollTrigger: { trigger: '.line-band', start: 'top 82%', once: true }
+        }
+      );
+
+      /* ── Story image scale ── */
+      gsap.fromTo('.story__panel',
+        { scale: 0.92, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.90, ease: 'power2.out',
+          scrollTrigger: { trigger: '.story__panel', start: 'top 82%', once: true }
+        }
+      );
+    }
+  </script>
+</body>
+</html>
