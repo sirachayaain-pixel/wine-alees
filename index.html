@@ -15,6 +15,7 @@
     :root {
       /* Brand color sampled from official Alees catalog: #6C3533 */
       --c-primary:      oklch(0.400 0.079 23.4);
+      --c-primary-deep: oklch(0.210 0.070 23.4);
       --c-primary-mid:  oklch(0.480 0.065 23.4);
       --c-primary-hi:   oklch(0.550 0.055 23.4);
       --c-primary-rose: oklch(0.520 0.060 350);
@@ -41,7 +42,7 @@
 
     /* ─── Reset ───────────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; font-size: 18px; }
     body {
       font-family: var(--font-body); font-size: 1rem; line-height: 1.65;
       color: var(--c-ink); background: var(--c-bg);
@@ -226,6 +227,15 @@
       clip-path: inset(0 0 100% 0); /* starts hidden; GSAP animates to inset(0 0 0% 0) */
       z-index: 0;
       will-change: clip-path;
+    }
+    /* Deepens the pour to a darker burgundy as the visitor scrolls through the hero —
+       the wine "settling" further into the glass. Scroll-triggered, scoped to .hero only. */
+    .hero__pour-deep {
+      position: absolute; inset: 0;
+      background: var(--c-primary-deep);
+      opacity: 0;
+      z-index: 0;
+      will-change: opacity;
     }
     .hero .container, .hero__visual { position: relative; z-index: 1; }
     .hero__content { color: var(--c-on-primary); }
@@ -503,6 +513,7 @@
   <!-- ─── Hero ─────────────────────────────────────────────────────── -->
   <section class="hero section" aria-labelledby="hero-h">
     <div class="hero__pour" aria-hidden="true"></div>
+    <div class="hero__pour-deep" aria-hidden="true"></div>
     <div class="container hero__content">
       <p class="hero__sub">Alees Wine Selection — อาลีส์</p>
       <h1 class="hero__headline" id="hero-h">
@@ -679,8 +690,7 @@
     </div>
   </footer>
 
-  <!-- Lenis smooth scroll + GSAP + ScrollTrigger -->
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+  <!-- GSAP + ScrollTrigger (native scroll, no smooth-scroll library) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
@@ -906,12 +916,6 @@
     } else {
       gsap.registerPlugin(ScrollTrigger);
 
-      /* ── Lenis smooth scroll, integrated with GSAP ticker ── */
-      const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
-      lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add((time) => lenis.raf(time * 1000));
-      gsap.ticker.lagSmoothing(0);
-
       /* ── Nav scrolled state via ScrollTrigger ── */
       ScrollTrigger.create({
         trigger: '.hero',
@@ -967,7 +971,16 @@
       gsap.to('.hero__bottle-art', {
         y: -90, ease: 'none',
         scrollTrigger: {
-          trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1.4
+          trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true
+        }
+      });
+
+      /* ── "Pouring" background: deepens from burgundy to dark wine-red as the
+         visitor scrolls through the hero, like wine settling into the glass ── */
+      gsap.to('.hero__pour-deep', {
+        opacity: 1, ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true
         }
       });
 
