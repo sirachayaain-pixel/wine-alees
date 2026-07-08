@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>รายการสินค้า — Alees Wine Selection</title>
+  <meta name="description" content="เลือกชมไวน์คัดสรรจากอิตาลีทั้งหมดของ Alees ค้นหาและกรองตามประเภท พร้อมราคาและรายละเอียด">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- ─── Nav ─────────────────────────────────────────────────────── -->
+  <nav class="nav" aria-label="เมนูหลัก">
+    <div class="container nav__inner">
+      <a href="index.html" class="nav__logo" aria-label="Alees Wine — หน้าแรก">
+        <svg class="nav__logo-mark" viewBox="0 0 72 84" fill="none" aria-hidden="true">
+          <line x1="36" y1="4"  x2="4"  y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="36" y1="4"  x2="68" y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="4"  y1="78" x2="20" y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="52" y1="78" x2="68" y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="18" y1="54" x2="54" y2="54" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="28" cy="26" rx="7.5" ry="9.5" stroke="currentColor" stroke-width="2.2" fill="none"/>
+          <ellipse cx="28" cy="26" rx="2.8" ry="3.5" fill="currentColor" opacity="0.55"/>
+          <ellipse cx="19" cy="44" rx="7"   ry="9"   stroke="currentColor" stroke-width="2.2" fill="none"/>
+          <ellipse cx="19" cy="44" rx="2.6" ry="3.2" fill="currentColor" opacity="0.55"/>
+          <ellipse cx="44" cy="26" rx="7.5" ry="9.5" stroke="currentColor" stroke-width="2.2" fill="none"/>
+          <ellipse cx="44" cy="26" rx="2.8" ry="3.5" fill="currentColor" opacity="0.55"/>
+          <ellipse cx="53" cy="44" rx="7"   ry="9"   stroke="currentColor" stroke-width="2.2" fill="none"/>
+          <ellipse cx="53" cy="44" rx="2.6" ry="3.2" fill="currentColor" opacity="0.55"/>
+          <ellipse cx="30" cy="11" rx="6"   ry="7.5" stroke="currentColor" stroke-width="2"   fill="none"/>
+          <ellipse cx="42" cy="11" rx="6"   ry="7.5" stroke="currentColor" stroke-width="2"   fill="none"/>
+        </svg>
+        <span class="nav__logo-word">LEES</span>
+      </a>
+      <ul class="nav__links" role="list">
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="catalog.html" aria-current="page">รายการสินค้า</a></li>
+        <li><a href="news.html">ข่าวสาร</a></li>
+        <li><a href="about.html">เกี่ยวกับเรา</a></li>
+        <li><a href="contact.html">ติดต่อ</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="cart.html" class="nav__cart-btn" aria-label="ตะกร้าสินค้า">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          <span class="nav__cart-badge" aria-live="polite"></span>
+        </a>
+        <a href="https://line.me/R/ti/p/@aleesofficial" class="nav__line-btn" target="_blank" rel="noopener noreferrer">Line@ สั่งซื้อ</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─── Page Header ──────────────────────────────────────────────── -->
+  <header class="page-header">
+    <div class="page-header__bg" style="background-image: url('assets/img/page-headers/catalog-header.jpg');"></div>
+    <div class="container">
+      <p class="page-header__kicker">รายการสินค้า</p>
+      <h1 class="page-header__title">ไวน์คัดสรรของเรา</h1>
+      <p class="page-header__sub">คัดสรรไวน์จากแหล่งผลิตชั้นนำในอิตาลี ค้นหาและกรองตามประเภทที่ต้องการ ดูรายละเอียดครบก่อนสั่งผ่าน Line@</p>
+    </div>
+  </header>
+
+  <!-- ─── Catalog ─────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="container catalog-layout">
+      <aside class="filters-sidebar" id="filters-sidebar" aria-label="ตัวกรองสินค้า"></aside>
+
+      <div class="catalog-main">
+        <div class="catalog__tools">
+          <button type="button" class="filters-toggle-btn" id="filters-toggle" aria-expanded="false" aria-controls="filters-sidebar">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+            ตัวกรอง
+            <span class="filters-toggle-btn__count" id="filters-toggle-count"></span>
+          </button>
+          <div class="search-box">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="search" id="search-input" placeholder="ค้นหาชื่อไวน์ แบรนด์ หรือองุ่น..." aria-label="ค้นหาสินค้า">
+          </div>
+          <div class="sort-box">
+            <label for="sort-select" class="sort-box__label">เรียงตาม</label>
+            <select id="sort-select" class="filter-select">
+              <option value="">แนะนำ</option>
+              <option value="price-asc">ราคา: ต่ำ → สูง</option>
+              <option value="price-desc">ราคา: สูง → ต่ำ</option>
+              <option value="rating-desc">คะแนน Vivino สูงสุด</option>
+              <option value="vintage-desc">ปีที่ผลิต ใหม่สุด</option>
+            </select>
+          </div>
+        </div>
+        <p class="catalog__result-count" id="result-count" aria-live="polite"></p>
+        <div class="catalog__grid" id="catalog-grid" aria-live="polite"></div>
+        <p class="catalog__empty" id="catalog-empty" style="display:none;">ไม่พบสินค้าที่ตรงกับการค้นหา ลองเปลี่ยนคำค้นหาหรือตัวกรอง</p>
+        <nav class="pagination" id="pagination" aria-label="เปลี่ยนหน้าสินค้า"></nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Footer ───────────────────────────────────────────────────── -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__top">
+        <div>
+          <div class="footer__logo">
+            <svg class="footer__logo-mark" viewBox="0 0 72 84" fill="none" aria-hidden="true">
+              <line x1="36" y1="4"  x2="4"  y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="36" y1="4"  x2="68" y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="4"  y1="78" x2="20" y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="52" y1="78" x2="68" y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="18" y1="54" x2="54" y2="54" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <ellipse cx="28" cy="26" rx="7.5" ry="9.5" stroke="currentColor" stroke-width="2.2" fill="none"/>
+              <ellipse cx="19" cy="44" rx="7"   ry="9"   stroke="currentColor" stroke-width="2.2" fill="none"/>
+              <ellipse cx="44" cy="26" rx="7.5" ry="9.5" stroke="currentColor" stroke-width="2.2" fill="none"/>
+              <ellipse cx="53" cy="44" rx="7"   ry="9"   stroke="currentColor" stroke-width="2.2" fill="none"/>
+              <ellipse cx="30" cy="11" rx="6"   ry="7.5" stroke="currentColor" stroke-width="2"   fill="none"/>
+              <ellipse cx="42" cy="11" rx="6"   ry="7.5" stroke="currentColor" stroke-width="2"   fill="none"/>
+            </svg>
+            <span class="footer__brand">LEES</span>
+          </div>
+          <p class="footer__tagline">ไวน์คุณภาพคัดสรรจากอิตาลี เพื่อทุกโอกาสพิเศษในชีวิตคุณ</p>
+        </div>
+        <nav aria-label="ลิงก์เมนู">
+          <p class="footer__col-head">เมนู</p>
+          <ul class="footer__list" role="list">
+            <li><a href="catalog.html">รายการสินค้า</a></li>
+            <li><a href="about.html">เกี่ยวกับเรา</a></li>
+            <li><a href="news.html">ข่าวสาร</a></li>
+            <li><a href="contact.html">ติดต่อเรา</a></li>
+          </ul>
+        </nav>
+        <div>
+          <p class="footer__col-head">ติดต่อ</p>
+          <ul class="footer__list" role="list">
+            <li><a href="https://line.me/R/ti/p/@aleesofficial" target="_blank" rel="noopener">Line@: @aleesofficial</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copy">© 2025 Alees Wine (อาลีส์). สงวนลิขสิทธิ์</p>
+        <a href="https://line.me/R/ti/p/@aleesofficial" class="footer__line-link" target="_blank" rel="noopener noreferrer">
+          <svg width="14" height="14" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M11 2C6.03 2 2 5.478 2 9.75c0 3.804 3.178 6.984 7.496 7.635.292.064.69.194.79.448.091.23.06.59.029.822l-.128.778c-.039.235-.18.92.807.501.987-.42 5.323-3.134 7.265-5.364C19.561 12.842 20 11.35 20 9.75 20 5.478 15.97 2 11 2z" fill="#06C755"/>
+          </svg>
+          Line@: @aleesofficial
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/site.js"></script>
+  <script>
+    /* Filter groups are read straight from the catalog data (site.js consts),
+       so the sidebar always reflects what's actually filterable in the sheet. */
+    const RANGE_GROUPS = [
+      { key: 'body',      title: 'น้ำหนักตัว (Body)' },
+      { key: 'sweetness', title: 'ความหวาน (Sweetness)' },
+      { key: 'acidity',   title: 'ความสดชื่น (Acidity)' },
+      { key: 'tannin',    title: 'แทนนิน (Tannin)' }
+    ];
+    const RANGE_MIN = 1, RANGE_MAX = 5;
+
+    const PAGE_SIZE = 12;
+
+    const SORTERS = {
+      'price-asc':    (a, b) => a.price - b.price,
+      'price-desc':   (a, b) => b.price - a.price,
+      'rating-desc':  (a, b) => (b.vivino ?? -1) - (a.vivino ?? -1),
+      'vintage-desc': (a, b) => (Number(b.vintage) || 0) - (Number(a.vintage) || 0)
+    };
+
+    const state = {
+      types: new Set(),
+      countries: new Set(),
+      priceBands: new Set(),
+      grape: '',
+      rating: '',
+      search: '',
+      sort: '',
+      page: 1
+    };
+    RANGE_GROUPS.forEach(g => { state[g.key] = { min: RANGE_MIN, max: RANGE_MAX }; });
+
+    const urlType = new URLSearchParams(location.search).get('type');
+    if (Object.keys(TYPE_TH).includes(urlType)) state.types.add(urlType);
+
+    function checkGroupHTML(groupKey, options) {
+      return options.map(o => `
+        <label class="filter-check">
+          <input type="checkbox" data-group="${groupKey}" value="${o.value}">
+          <span>${o.label}</span>
+          <span class="filter-check__count" data-count="${groupKey}:${o.value}"></span>
+        </label>`).join('');
+    }
+
+    function radioGroupHTML(groupKey, options) {
+      return options.map(o => `
+        <label class="filter-check">
+          <input type="radio" name="${groupKey}" data-group="${groupKey}" value="${o.value}">
+          <span>${o.label}</span>
+        </label>`).join('');
+    }
+
+    function rangeSliderHTML(g) {
+      return `
+        <div class="filter-group">
+          <p class="filter-group__title">${g.title}</p>
+          <div class="range-slider" data-key="${g.key}">
+            <div class="range-slider__track"><div class="range-slider__fill"></div></div>
+            <input type="range" min="${RANGE_MIN}" max="${RANGE_MAX}" step="1" value="${RANGE_MIN}" class="range-slider__input" data-thumb="min" aria-label="${g.title} ต่ำสุด">
+            <input type="range" min="${RANGE_MIN}" max="${RANGE_MAX}" step="1" value="${RANGE_MAX}" class="range-slider__input" data-thumb="max" aria-label="${g.title} สูงสุด">
+          </div>
+          <div class="range-slider__labels">
+            <span class="range-slider__value" data-range-min="${g.key}">${RANGE_MIN}</span>
+            <span class="range-slider__value" data-range-max="${g.key}">${RANGE_MAX}</span>
+          </div>
+        </div>`;
+    }
+
+    function initRangeSliders() {
+      RANGE_GROUPS.forEach(g => {
+        const wrap = document.querySelector(`.range-slider[data-key="${g.key}"]`);
+        const minInput = wrap.querySelector('[data-thumb="min"]');
+        const maxInput = wrap.querySelector('[data-thumb="max"]');
+        const fill = wrap.querySelector('.range-slider__fill');
+        const minLabel = document.querySelector(`[data-range-min="${g.key}"]`);
+        const maxLabel = document.querySelector(`[data-range-max="${g.key}"]`);
+
+        function update() {
+          const lo = Number(minInput.value), hi = Number(maxInput.value);
+          const span = RANGE_MAX - RANGE_MIN;
+          fill.style.left = ((lo - RANGE_MIN) / span) * 100 + '%';
+          fill.style.width = ((hi - lo) / span) * 100 + '%';
+          minLabel.textContent = lo;
+          maxLabel.textContent = hi;
+          state[g.key] = { min: lo, max: hi };
+        }
+
+        minInput.addEventListener('input', () => {
+          if (Number(minInput.value) > Number(maxInput.value)) minInput.value = maxInput.value;
+          update();
+          renderCatalog();
+        });
+        maxInput.addEventListener('input', () => {
+          if (Number(maxInput.value) < Number(minInput.value)) maxInput.value = minInput.value;
+          update();
+          renderCatalog();
+        });
+
+        update();
+      });
+    }
+
+    function renderSidebar() {
+      const typeOptions = Object.entries(TYPE_TH).map(([value, label]) => ({ value, label }));
+      const countryOptions = Object.entries(COUNTRY_TH).map(([value, label]) => ({ value, label }));
+      const priceOptions = PRICE_BANDS.map(b => ({ value: b.id, label: b.label }));
+      const ratingOptions = [{ value: '', label: 'ทั้งหมด' }, ...RATING_BANDS.map(b => ({ value: b.id, label: b.label }))];
+
+      document.getElementById('filters-sidebar').innerHTML = `
+        <div class="filters-sidebar__head">
+          <h2 class="filters-sidebar__title">ตัวกรอง</h2>
+          <button type="button" id="clear-filters" class="filters-clear">ล้างตัวกรอง</button>
+        </div>
+        <div class="filter-group">
+          <p class="filter-group__title">ประเภทไวน์</p>
+          ${checkGroupHTML('types', typeOptions)}
+        </div>
+        <div class="filter-group">
+          <p class="filter-group__title">ประเทศ</p>
+          ${checkGroupHTML('countries', countryOptions)}
+        </div>
+        <div class="filter-group">
+          <p class="filter-group__title">พันธุ์องุ่นหลัก</p>
+          <select id="f-grape" class="filter-select" data-group="grape">
+            <option value="">ทั้งหมด</option>
+            ${GRAPES.map(g => `<option value="${g}">${g}</option>`).join('')}
+          </select>
+        </div>
+        <div class="filter-group">
+          <p class="filter-group__title">ช่วงราคา (บาท)</p>
+          ${checkGroupHTML('priceBands', priceOptions)}
+        </div>
+        ${RANGE_GROUPS.map(rangeSliderHTML).join('')}
+        <div class="filter-group">
+          <p class="filter-group__title">คะแนน Vivino</p>
+          ${radioGroupHTML('rating', ratingOptions)}
+        </div>`;
+
+      document.querySelector('input[data-group="rating"][value=""]').checked = true;
+      state.types.forEach(v => {
+        const el = document.querySelector(`input[data-group="types"][value="${v}"]`);
+        if (el) el.checked = true;
+      });
+
+      initRangeSliders();
+      document.getElementById('filters-sidebar').addEventListener('change', onFilterChange);
+      document.getElementById('clear-filters').addEventListener('click', clearFilters);
+    }
+
+    function onFilterChange(e) {
+      const el = e.target;
+      const group = el.dataset.group;
+      if (!group) return;
+      if (el.type === 'checkbox') {
+        el.checked ? state[group].add(el.value) : state[group].delete(el.value);
+      } else {
+        state[group] = el.value;
+      }
+      state.page = 1;
+      renderCatalog();
+    }
+
+    function clearFilters() {
+      state.types.clear();
+      state.countries.clear();
+      state.priceBands.clear();
+      state.grape = '';
+      state.rating = '';
+      state.search = '';
+      state.page = 1;
+      document.querySelectorAll('#filters-sidebar input[type="checkbox"]').forEach(cb => cb.checked = false);
+      document.querySelectorAll('#filters-sidebar input[type="radio"]').forEach(r => r.checked = r.value === '');
+      document.getElementById('f-grape').value = '';
+      document.getElementById('search-input').value = '';
+      RANGE_GROUPS.forEach(g => {
+        const wrap = document.querySelector(`.range-slider[data-key="${g.key}"]`);
+        wrap.querySelector('[data-thumb="min"]').value = RANGE_MIN;
+        wrap.querySelector('[data-thumb="max"]').value = RANGE_MAX;
+      });
+      initRangeSliders();
+      renderCatalog();
+    }
+
+    /* skip: group key to exclude from the check, used to compute facet counts
+       against "everything else currently selected" rather than the raw catalog. */
+    function matchesFilters(w, skip) {
+      if (skip !== 'types' && state.types.size && !state.types.has(w.type)) return false;
+      if (skip !== 'countries' && state.countries.size && !state.countries.has(w.country)) return false;
+      if (skip !== 'grape' && state.grape && w.grapeMain !== state.grape) return false;
+      if (skip !== 'priceBands' && state.priceBands.size) {
+        const inBand = [...state.priceBands].some(id => PRICE_BANDS.find(b => b.id === id).test(w.price));
+        if (!inBand) return false;
+      }
+      if (skip !== 'rating' && state.rating) {
+        if (!RATING_BANDS.find(b => b.id === state.rating).test(w.vivino)) return false;
+      }
+      for (const g of RANGE_GROUPS) {
+        if (skip === g.key) continue;
+        const r = state[g.key];
+        if (r.min === RANGE_MIN && r.max === RANGE_MAX) continue;
+        const v = w[g.key];
+        if (v === null || v < r.min || v > r.max) return false;
+      }
+      const q = state.search.trim().toLowerCase();
+      if (q && ![w.name, w.brand, w.grape, w.region, w.country].join(' ').toLowerCase().includes(q)) return false;
+      return true;
+    }
+
+    function updateCounts() {
+      Object.keys(TYPE_TH).forEach(v => {
+        const el = document.querySelector(`[data-count="types:${v}"]`);
+        if (el) el.textContent = WINES.filter(w => matchesFilters(w, 'types') && w.type === v).length;
+      });
+      Object.keys(COUNTRY_TH).forEach(v => {
+        const el = document.querySelector(`[data-count="countries:${v}"]`);
+        if (el) el.textContent = WINES.filter(w => matchesFilters(w, 'countries') && w.country === v).length;
+      });
+      PRICE_BANDS.forEach(b => {
+        const el = document.querySelector(`[data-count="priceBands:${b.id}"]`);
+        if (el) el.textContent = WINES.filter(w => matchesFilters(w, 'priceBands') && b.test(w.price)).length;
+      });
+    }
+
+    function updateToggleState() {
+      const rangesActive = RANGE_GROUPS.filter(g => state[g.key].min !== RANGE_MIN || state[g.key].max !== RANGE_MAX).length;
+      const n = state.types.size + state.countries.size + state.priceBands.size + rangesActive
+        + (state.grape ? 1 : 0) + (state.rating ? 1 : 0);
+      const badge = document.getElementById('filters-toggle-count');
+      badge.textContent = n;
+      badge.style.display = n ? 'inline-flex' : 'none';
+      document.getElementById('clear-filters').disabled = n === 0 && !state.search;
+    }
+
+    /* Page numbers with ellipsis: always show first/last, a window around
+       the current page, and collapse the rest so long catalogs don't turn
+       the pager into a wall of buttons. */
+    function pageNumbers(current, total) {
+      const pages = new Set([1, total, current, current - 1, current + 1]);
+      return [...pages].filter(p => p >= 1 && p <= total).sort((a, b) => a - b);
+    }
+
+    function paginationHTML(current, total) {
+      if (total <= 1) return '';
+      const nums = pageNumbers(current, total);
+      let html = `<button type="button" class="pagination__btn" data-nav data-page="${current - 1}" ${current === 1 ? 'disabled' : ''} aria-label="หน้าก่อนหน้า">‹</button>`;
+      nums.forEach((p, i) => {
+        if (i > 0 && p - nums[i - 1] > 1) html += `<span class="pagination__ellipsis">…</span>`;
+        html += `<button type="button" class="pagination__btn ${p === current ? 'is-current' : ''}" data-page-num data-page="${p}" ${p === current ? 'aria-current="page"' : ''}>${p}</button>`;
+      });
+      html += `<button type="button" class="pagination__btn" data-nav data-page="${current + 1}" ${current === total ? 'disabled' : ''} aria-label="หน้าถัดไป">›</button>`;
+      return html;
+    }
+
+    function goToPage(page) {
+      state.page = page;
+      renderCatalog();
+      document.querySelector('.catalog-main').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function renderCatalog() {
+      const grid = document.getElementById('catalog-grid');
+      const empty = document.getElementById('catalog-empty');
+      const pagination = document.getElementById('pagination');
+      const list = WINES.filter(w => matchesFilters(w, null));
+      const sorter = SORTERS[state.sort];
+      if (sorter) list.sort(sorter);
+
+      const totalPages = Math.max(1, Math.ceil(list.length / PAGE_SIZE));
+      state.page = Math.min(Math.max(1, state.page), totalPages);
+      const start = (state.page - 1) * PAGE_SIZE;
+      const pageList = list.slice(start, start + PAGE_SIZE);
+
+      grid.innerHTML = pageList.map(wineCardHTML).join('');
+      empty.style.display = list.length ? 'none' : 'block';
+      pagination.innerHTML = paginationHTML(state.page, totalPages);
+      document.getElementById('result-count').textContent = list.length
+        ? `แสดง ${start + 1}–${start + pageList.length} จาก ${list.length} รายการ (ทั้งหมด ${WINES.length} รายการ)`
+        : `พบ 0 รายการ จากทั้งหมด ${WINES.length} รายการ`;
+      updateCounts();
+      updateToggleState();
+    }
+
+    document.getElementById('pagination').addEventListener('click', e => {
+      const btn = e.target.closest('button[data-page]');
+      if (!btn || btn.disabled || btn.classList.contains('is-current')) return;
+      goToPage(Number(btn.dataset.page));
+    });
+
+    document.getElementById('search-input').addEventListener('input', e => {
+      state.search = e.target.value;
+      state.page = 1;
+      renderCatalog();
+    });
+
+    document.getElementById('sort-select').addEventListener('change', e => {
+      state.sort = e.target.value;
+      state.page = 1;
+      renderCatalog();
+    });
+
+    document.getElementById('filters-toggle').addEventListener('click', () => {
+      const sidebar = document.getElementById('filters-sidebar');
+      const open = sidebar.classList.toggle('is-open');
+      document.getElementById('filters-toggle').setAttribute('aria-expanded', String(open));
+    });
+
+    renderSidebar();
+    renderCatalog();
+  </script>
+</body>
+</html>

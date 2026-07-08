@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ส่งคำสั่งซื้อ — Alees Wine Selection</title>
+  <meta name="description" content="กรอกข้อมูลติดต่อเพื่อส่งคำสั่งซื้อไวน์กับ Alees Wine ทีมงานจะติดต่อกลับผ่าน Line">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- ─── Nav ─────────────────────────────────────────────────────── -->
+  <nav class="nav" aria-label="เมนูหลัก">
+    <div class="container nav__inner">
+      <a href="index.html" class="nav__logo" aria-label="Alees Wine — หน้าแรก">
+        <svg class="nav__logo-mark" viewBox="0 0 72 84" fill="none" aria-hidden="true">
+          <line x1="36" y1="4"  x2="4"  y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="36" y1="4"  x2="68" y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="4"  y1="78" x2="20" y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="52" y1="78" x2="68" y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+          <line x1="18" y1="54" x2="54" y2="54" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+          <ellipse cx="28" cy="26" rx="7.5" ry="9.5" stroke="currentColor" stroke-width="2.2" fill="none"/>
+          <ellipse cx="28" cy="26" rx="2.8" ry="3.5" fill="currentColor" opacity="0.55"/>
+          <ellipse cx="19" cy="44" rx="7"   ry="9"   stroke="currentColor" stroke-width="2.2" fill="none"/>
+          <ellipse cx="19" cy="44" rx="2.6" ry="3.2" fill="currentColor" opacity="0.55"/>
+          <ellipse cx="44" cy="26" rx="7.5" ry="9.5" stroke="currentColor" stroke-width="2.2" fill="none"/>
+          <ellipse cx="44" cy="26" rx="2.8" ry="3.5" fill="currentColor" opacity="0.55"/>
+          <ellipse cx="53" cy="44" rx="7"   ry="9"   stroke="currentColor" stroke-width="2.2" fill="none"/>
+          <ellipse cx="53" cy="44" rx="2.6" ry="3.2" fill="currentColor" opacity="0.55"/>
+          <ellipse cx="30" cy="11" rx="6"   ry="7.5" stroke="currentColor" stroke-width="2"   fill="none"/>
+          <ellipse cx="42" cy="11" rx="6"   ry="7.5" stroke="currentColor" stroke-width="2"   fill="none"/>
+        </svg>
+        <span class="nav__logo-word">LEES</span>
+      </a>
+      <ul class="nav__links" role="list">
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="catalog.html">รายการสินค้า</a></li>
+        <li><a href="news.html">ข่าวสาร</a></li>
+        <li><a href="about.html">เกี่ยวกับเรา</a></li>
+        <li><a href="contact.html">ติดต่อ</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="cart.html" class="nav__cart-btn" aria-label="ตะกร้าสินค้า">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          <span class="nav__cart-badge" aria-live="polite"></span>
+        </a>
+        <a href="https://line.me/R/ti/p/@aleesofficial" class="nav__line-btn" target="_blank" rel="noopener noreferrer">Line@ สั่งซื้อ</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <div class="page-header__bg" style="background-image: url('assets/img/page-headers/order-header.jpg'); background-position: center 78%;"></div>
+    <div class="container">
+      <p class="page-header__kicker">ส่งคำสั่งซื้อ</p>
+      <h1 class="page-header__title">กรอกข้อมูลติดต่อ</h1>
+      <p class="page-header__sub">ทีมงาน Alees จะติดต่อกลับผ่าน Line เพื่อยืนยันรายการและแจ้งขั้นตอนการชำระเงิน</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container container--narrow">
+      <p class="breadcrumb"><a href="cart.html">ตะกร้าสินค้า</a> <span>/</span> <span>ส่งคำสั่งซื้อ</span></p>
+      <div id="order-root"></div>
+    </div>
+  </section>
+
+  <!-- ─── Footer ───────────────────────────────────────────────────── -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__top">
+        <div>
+          <div class="footer__logo">
+            <svg class="footer__logo-mark" viewBox="0 0 72 84" fill="none" aria-hidden="true">
+              <line x1="36" y1="4"  x2="4"  y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="36" y1="4"  x2="68" y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="4"  y1="78" x2="20" y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="52" y1="78" x2="68" y2="78" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="18" y1="54" x2="54" y2="54" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <ellipse cx="28" cy="26" rx="7.5" ry="9.5" stroke="currentColor" stroke-width="2.2" fill="none"/>
+              <ellipse cx="19" cy="44" rx="7"   ry="9"   stroke="currentColor" stroke-width="2.2" fill="none"/>
+              <ellipse cx="44" cy="26" rx="7.5" ry="9.5" stroke="currentColor" stroke-width="2.2" fill="none"/>
+              <ellipse cx="53" cy="44" rx="7"   ry="9"   stroke="currentColor" stroke-width="2.2" fill="none"/>
+              <ellipse cx="30" cy="11" rx="6"   ry="7.5" stroke="currentColor" stroke-width="2"   fill="none"/>
+              <ellipse cx="42" cy="11" rx="6"   ry="7.5" stroke="currentColor" stroke-width="2"   fill="none"/>
+            </svg>
+            <span class="footer__brand">LEES</span>
+          </div>
+          <p class="footer__tagline">ไวน์คุณภาพคัดสรรจากอิตาลี เพื่อทุกโอกาสพิเศษในชีวิตคุณ</p>
+        </div>
+        <nav aria-label="ลิงก์เมนู">
+          <p class="footer__col-head">เมนู</p>
+          <ul class="footer__list" role="list">
+            <li><a href="catalog.html">รายการสินค้า</a></li>
+            <li><a href="about.html">เกี่ยวกับเรา</a></li>
+            <li><a href="news.html">ข่าวสาร</a></li>
+            <li><a href="contact.html">ติดต่อเรา</a></li>
+          </ul>
+        </nav>
+        <div>
+          <p class="footer__col-head">ติดต่อ</p>
+          <ul class="footer__list" role="list">
+            <li><a href="https://line.me/R/ti/p/@aleesofficial" target="_blank" rel="noopener">Line@: @aleesofficial</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copy">© 2025 Alees Wine (อาลีส์). สงวนลิขสิทธิ์</p>
+        <a href="https://line.me/R/ti/p/@aleesofficial" class="footer__line-link" target="_blank" rel="noopener noreferrer">
+          <svg width="14" height="14" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M11 2C6.03 2 2 5.478 2 9.75c0 3.804 3.178 6.984 7.496 7.635.292.064.69.194.79.448.091.23.06.59.029.822l-.128.778c-.039.235-.18.92.807.501.987-.42 5.323-3.134 7.265-5.364C19.561 12.842 20 11.35 20 9.75 20 5.478 15.97 2 11 2z" fill="#06C755"/>
+          </svg>
+          Line@: @aleesofficial
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/site.js"></script>
+  <script>
+    const root = document.getElementById('order-root');
+    const items = cartWithDetails();
+
+    if (!items.length) {
+      root.innerHTML = `
+        <div class="cart-empty">
+          <p>ยังไม่มีสินค้าในตะกร้า กรุณาเลือกสินค้าก่อนส่งคำสั่งซื้อ</p>
+          <a href="catalog.html" class="btn btn--solid">เลือกชมสินค้า</a>
+        </div>`;
+    } else {
+      const total = cartTotal();
+      root.innerHTML = `
+        <div class="order-summary">
+          <p class="order-summary__title">สรุปรายการสั่งซื้อ</p>
+          ${items.map(i => `<div class="order-summary__item"><span>${i.name} ×${i.qty}</span><span>${fmtPrice(i.price * i.qty)}</span></div>`).join('')}
+          <div class="order-summary__total"><span>รวมทั้งหมด</span><span class="order-summary__total-amount">${fmtPrice(total)} THB</span></div>
+        </div>
+        <form id="order-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="f-name">ชื่อ-นามสกุล <span class="req">*</span></label>
+            <input class="form-input" type="text" id="f-name" placeholder="กรอกชื่อ-นามสกุล" required autocomplete="name">
+            <p class="form-error" id="err-name">กรุณากรอกชื่อ-นามสกุล</p>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="f-phone">เบอร์โทรศัพท์ <span class="req">*</span></label>
+            <input class="form-input" type="tel" id="f-phone" placeholder="08X-XXX-XXXX" required autocomplete="tel">
+            <p class="form-error" id="err-phone">กรุณากรอกเบอร์โทรศัพท์</p>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="f-line">Line ID <span class="req">*</span></label>
+            <input class="form-input" type="text" id="f-line" placeholder="@your_line_id" required>
+            <p class="form-error" id="err-line">กรุณากรอก Line ID</p>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="f-note">หมายเหตุเพิ่มเติม</label>
+            <textarea class="form-input" id="f-note" placeholder="ที่อยู่จัดส่ง หรือคำถามเกี่ยวกับสินค้า"></textarea>
+          </div>
+          <button type="submit" class="btn btn--solid btn--full">ยืนยันและส่งคำสั่งซื้อ</button>
+        </form>`;
+
+      const form = document.getElementById('order-form');
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        const name = document.getElementById('f-name').value.trim();
+        const phone = document.getElementById('f-phone').value.trim();
+        const line = document.getElementById('f-line').value.trim();
+        const note = document.getElementById('f-note').value.trim();
+
+        let valid = true;
+        [['f-name', 'err-name', name], ['f-phone', 'err-phone', phone], ['f-line', 'err-line', line]].forEach(([inputId, errId, val]) => {
+          const input = document.getElementById(inputId);
+          const err = document.getElementById(errId);
+          const ok = val.length > 0;
+          input.classList.toggle('invalid', !ok);
+          err.classList.toggle('show', !ok);
+          if (!ok) {
+            valid = false;
+            input.classList.remove('shake');
+            void input.offsetWidth;
+            input.classList.add('shake');
+          }
+        });
+        if (!valid) return;
+
+        const orderRef = 'AL' + Math.floor(100000 + (items.reduce((s, i) => s + i.id * i.qty, 0) * 37 % 900000));
+        sessionStorage.setItem('alees_last_order', JSON.stringify({
+          ref: orderRef, name, phone, line, note, items, total: cartTotal()
+        }));
+        setCart([]);
+        location.href = 'confirmation.html';
+      });
+    }
+  </script>
+</body>
+</html>
